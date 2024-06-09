@@ -109,8 +109,15 @@ local plugins = {
     opts = {
       inlay_hints = { enabled = true },
     },
-  }
+  },
 
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    lazy = false,
+  }
 
   -- To make a plugin not be loaded
   -- {

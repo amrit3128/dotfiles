@@ -30,4 +30,6 @@ function Groff()
   vim.cmd('!groff -ms -T pdf -tle ' .. vim.fn.shellescape(vim.fn.expand('%')) .. ' > tmp.pdf')
 end
 
+vim.api.nvim_set_keymap("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 return M

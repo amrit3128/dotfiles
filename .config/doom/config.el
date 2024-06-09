@@ -90,60 +90,9 @@
 ;; Setting the background blur
 (add-to-list 'default-frame-alist '(alpha-background . 90))
 
-;; Configure org-babel for jupyter
-(use-package! jupyter
-  :defer t
-  :init
-  (setq org-babel-default-header-args:jupyter-python
-        '((:session . "py") (:kernel . "python3")))
-  (setq ob-async-no-async-languages-alist '("jupyter-python")))
-
-(after! org
-  (require 'ob-jupyter))
-
-;; Tress Sitter
-;; (use-package! tree-sitter
-;;   :hook ((python-mode . tree-sitter-hl-mode)
-;;          (lua-mode . tree-sitter-hl-mode)
-;;          (rust-mode . tree-sitter-hl-mode)
-;;          )
-;;   :config
-;;   (require 'tree-sitter-langs))
-
-;; (use-package! tree-sitter-langs
-;;   :after tree-sitter)
-
-;; Ensure lsp-mode is enabled for Python
-;; (use-package! lsp-mode
-;;   :commands (lsp lsp-deferred)
-;;   :hook ((python-mode . lsp-deferred))
-;;   :config
-;;   (setq lsp-enable-on-type-formatting nil
-;;         lsp-signature-auto-activate nil
-;;         lsp-headerline-breadcrumb-enable nil))
-
-;; Use lsp-pyright for Python
-;; (use-package! lsp-pyright
-;;   :after lsp-mode
-;;   :config
-;;   (setq lsp-pyright-disable-language-service nil
-;;         lsp-pyright-disable-organize-imports nil
-;;         lsp-pyright-auto-import-completions t
-;;         lsp-pyright-venv-path "~/.virtualenvs")
-;;   :hook (python-mode . (lambda ()
-;;                          (require 'lsp-pyright)
-;;                          (lsp-deferred))))  ;; or lsp
-
-;; Optional: Configure company-mode for autocompletion
-;; (use-package! company
-;;   :config
-;;   (setq company-idle-delay 0.1
-;;         company-minimum-prefix-length 1
-;;         company-show-numbers t))
-
-;; Optional: Configure flycheck for on-the-fly syntax checking
-;; (use-package! flycheck
-;;   :hook (lsp-mode . flycheck-mode)
-;;   :config
-;;   (setq flycheck-python-pyright-executable "pyright"))
-
+(setq
+        confirm-kill-emacs nil
+        treemacs-is-never-other-window nil
+        display-line-numbers 'relative
+        projectile-globally-ignored-directories '("env" ".git")
+        projectile-project-search-path '("~/git_repos/" "~/code/"))

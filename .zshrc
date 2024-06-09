@@ -75,6 +75,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
+alias hx='helix'
 alias vim='nvim'
 alias c='clear'
 
@@ -103,18 +104,6 @@ alias songs='mpv --no-vid --shuffle https://youtube.com/playlist\?list\=PLAn1jVZ
 alias sttt_scanline='sttt scanline --scanline-vertical true --scanline-reverse true --scanline-width 2 --scanline-scale-width 1.1 --scanline-scale-ratio 0.5'
 alias weather='curl wttr.in'
 
-#                             _       
-#   _____  ___ __   ___  _ __| |_ ___ 
-#  / _ \ \/ / '_ \ / _ \| '__| __/ __|
-# |  __/>  <| |_) | (_) | |  | |_\__ \
-#  \___/_/\_\ .__/ \___/|_|   \__|___/
-#           |_|                       
-#
-
-export PATH="/home/amrit/.local/bin/:$PATH"
-export PATH="/home/amrit/.config/emacs/bin:$PATH"
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
 #  ____  _             _               
 # / ___|| |_ __ _ _ __| |_ _   _ _ __  
 # \___ \| __/ _` | '__| __| | | | '_ \ 

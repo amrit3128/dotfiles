@@ -71,3 +71,6 @@
 (package! dashboard)
 (package! ripgrep)
 (package! rg)
+(package! org-fancy-priorities)
+(package! org-brain)
+(package! org-super-agenda)
