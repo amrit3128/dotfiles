@@ -84,15 +84,91 @@
 (setq display-line-numbers-type 'relative)
 ;; activate line numbering in all buffers/modes
 ;; (global-display-line-numbers-mode)
-
 (set-face-attribute 'default nil :height 110)
+
+;; Configure org-babel for jupyter
+(use-package! jupyter
+  :defer t
+  :init
+  (setq org-babel-default-header-args:jupyter-python
+        '((:session . "py") (:kernel . "python3")))
+  (setq ob-async-no-async-languages-alist '("jupyter-python")))
+
+(after! org
+  (require 'ob-jupyter))
 
 ;; Setting the background blur
 (add-to-list 'default-frame-alist '(alpha-background . 90))
 
 (setq
-        confirm-kill-emacs nil
-        treemacs-is-never-other-window nil
-        display-line-numbers 'relative
-        projectile-globally-ignored-directories '("env" ".git")
-        projectile-project-search-path '("~/git_repos/" "~/code/"))
+ confirm-kill-emacs nil
+ undo-tree-mode 1
+ treemacs-is-never-other-window nil
+ display-line-numbers 'relative
+ projectile-globally-ignored-directories '("env" ".git")
+ projectile-project-search-path '("~/git_repos/" "~/code/"))
+
+;; Dashboard
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+(defun my-weebery-is-always-greater ()
+  (let* ((banner '("███████╗███╗   ███╗ █████╗  ██████╗███████╗"
+                   "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
+                   "█████╗  ██╔████╔██║███████║██║     ███████╗"
+                   "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
+                   "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
+                   "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"
+                   "         The Editor That God Uses          "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line (make-string (max 0 (- longest-line (length line))) 32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+(setq +doom-dashboard-ascii-banner-fn #'my-weebery-is-always-greater)
+
+;; (require 'vertico-posframe)
+;; (vertico-posframe-mode 1)
+
+
+;; (custom-set-faces
+;;   '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+;;   '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
+;;   '(org-level-3 ((t (:inherit outline-3 :height 1.15))))
+;;   '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
+;;   '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+;; )
+
+;; (after! org
+;;   (setq
+;;    org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
+;;    org-todo-keyword-faces
+;;    '(("TODO" :foreground "#7c7c75" :weigth normal :underline t)
+;;      ("WAITING" :foreground "#9f7efe" :weigth normal :underline t)
+;;      ("INPROGRESS" :foreground "#0098dd" :weigth normal :underline t)
+;;      ("DONE" :foreground "#50a14f" :weigth normal :underline t)
+;;      ("CANCELLED" :foreground "#ff6480" :weigth normal :underline t))
+;;    org-agenda-files (directory-files-recursively "~/org-notes/" "\.org$")
+;;    ))
+
+(require 'lsp-mode)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
+
+(undo-tree-mode 1)
+
+(require 'slime)
+(slime-setup '(slime-fancy slime-quicklisp slime-asdf slime-mrepl))

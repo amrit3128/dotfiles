@@ -102,7 +102,7 @@ if pidof swaybg > /dev/null; then
 fi
 
 # Retrieve image files
-PICS=($(ls "${DIR}" | grep -E ".jpg$|.jpeg$|.png$|.gif$"))
+PICS=($(ls "${DIR}" | grep -E ".jpg$|.jpeg$|.png$|.gif$|.webp$"))
 RANDOM_PIC="${PICS[$((RANDOM % ${#PICS[@]}))]}"
 RANDOM_PIC_NAME="${#PICS[@]}. random"
 

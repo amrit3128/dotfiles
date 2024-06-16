@@ -53,6 +53,8 @@
 (package! ayu-theme)
 (package! catppuccin-theme)
 (package! abyss-theme)
+(package! cyberpunk-theme)
+(package! material-theme)
 
 ;; Packages
 (package! org-modern)
@@ -74,3 +76,8 @@
 (package! org-fancy-priorities)
 (package! org-brain)
 (package! org-super-agenda)
+(package! vertico)
+(package! vertico-posframe)
+(package! spacious-padding)
+(package! undo-tree)
+(package! slime)

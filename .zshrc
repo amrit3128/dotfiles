@@ -72,13 +72,6 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# Aliases
-alias ls='ls --color'
-alias hx='helix'
-alias vim='nvim'
-alias c='clear'
-
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
@@ -90,16 +83,19 @@ eval "$(zoxide init --cmd cd zsh)"
 # /_/   \_\_|_|\__,_|___/
 #                        
 
+
+# Aliases
+alias hx='helix'
+alias c='clear'
+
 alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland'
-alias vi="/usr/bin/vim"
 # alias btop='btop --utf-force'
-alias vim='nvim'
 alias ls='lsd '
 # alias l='/usr/bin/ls'
 alias cl='clear'
 alias lc='clear'
 alias sl='ls'
-alias cat='bat'
+# alias cat='bat'
 alias songs='mpv --no-vid --shuffle https://youtube.com/playlist\?list\=PLAn1jVZ2DTg3BBMpAmtGKAdnZh6PimnVF\&si\=080D1NNZEBAwt6xm'
 alias sttt_scanline='sttt scanline --scanline-vertical true --scanline-reverse true --scanline-width 2 --scanline-scale-width 1.1 --scanline-scale-ratio 0.5'
 alias weather='curl wttr.in'
@@ -136,3 +132,14 @@ function mkcd {
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# Import colorscheme from 'wal' asynchronously
+# &   # Run the process in the background.
+# ( ) # Hide shell job control messages.
+# Not supported in the "fish" shell.
+(cat ~/.cache/wal/sequences &)
+
+# Alternative (blocks terminal for 0-3ms)
+# cat ~/.cache/wal/sequences
+
+# To add support for TTYs this line can be optionally added.
+source ~/.cache/wal/colors-tty.sh

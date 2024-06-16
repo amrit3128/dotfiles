@@ -1,0 +1,7 @@
+[pyprland]
+plugins = [
+    "magnify",
+    "fetch_client_menu",
+    "expose",
+    "layout_center"
+]
