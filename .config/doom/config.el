@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
+(setq user-full-name "Amritanshu"
+      user-mail-address "tripathyamritanshu7@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -32,8 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one)
-(setq doom-theme 'catppuccin)
+(setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -76,15 +75,12 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Kill emacs
-(setq confirm-kill-emacs nil)
-
 ;; Relative Line Numbering
 ;; set type of line numbering (global variable)
 (setq display-line-numbers-type 'relative)
 ;; activate line numbering in all buffers/modes
 ;; (global-display-line-numbers-mode)
-(set-face-attribute 'default nil :height 110)
+(set-face-attribute 'default nil :height 170)
 
 ;; Configure org-babel for jupyter
 (use-package! jupyter
@@ -105,8 +101,8 @@
  undo-tree-mode 1
  treemacs-is-never-other-window nil
  display-line-numbers 'relative
- projectile-globally-ignored-directories '("env" ".git")
- projectile-project-search-path '("~/git_repos/" "~/code/"))
+ projectile-globally-ignored-directories '("env" ".git" "venv" ".venv")
+ projectile-project-search-path '("~/git_repos/" "~/codes/"))
 
 ;; Dashboard
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
@@ -118,7 +114,7 @@
                    "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
                    "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
                    "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"
-                   "         The Editor That God Uses          "))
+                   "         the editor that god uses          "))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property
      (point)
@@ -129,18 +125,6 @@
                "\n"))
      'face 'doom-dashboard-banner)))
 (setq +doom-dashboard-ascii-banner-fn #'my-weebery-is-always-greater)
-
-;; (require 'vertico-posframe)
-;; (vertico-posframe-mode 1)
-
-
-;; (custom-set-faces
-;;   '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
-;;   '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
-;;   '(org-level-3 ((t (:inherit outline-3 :height 1.15))))
-;;   '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
-;;   '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-;; )
 
 ;; (after! org
 ;;   (setq
@@ -155,10 +139,8 @@
 ;;    ))
 
 (require 'lsp-mode)
-(add-hook 'go-mode-hook #'lsp-deferred)
 
-;; Set up before-save hooks to format buffer and add/delete imports.
-;; Make sure you don't have other gofmt/goimports hooks enabled.
+(add-hook 'go-mode-hook #'lsp-deferred)
 (defun lsp-go-install-save-hooks ()
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
@@ -168,7 +150,441 @@
  '(("gopls.completeUnimported" t t)
    ("gopls.staticcheck" t t)))
 
-(undo-tree-mode 1)
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))  ; or lsp-deferred
 
-(require 'slime)
-(slime-setup '(slime-fancy slime-quicklisp slime-asdf slime-mrepl))
+(setq custom-file null-device)
+
+(after! evil
+  (map! :i "C-h" #'backward-char
+        :i "C-j" #'next-line
+        :i "C-k" #'previous-line
+        :i "C-l" #'forward-char
+        :n "C-j" #'evil-window-down
+        :n "C-k" #'evil-window-up
+        :n "C-h" #'evil-window-left
+        :n "C-l" #'evil-window-right
+        :n "C-q" #'evil-window-delete
+        :v "C-j" #'evil-window-down
+        :v "C-k" #'evil-window-up
+        :v "C-h" #'evil-window-left
+        :v "C-l" #'evil-window-right
+        :v "C-q" #'evil-window-delete
+        ;; :n "M-q" #'kill-current-buffer
+        ;; :n "M-w" #'+workspace/close-window-or-workspace
+        ;; :n "M-n" #'next-buffer
+        ;; :n "M-p" #'previous-buffer
+        ;; :n "M-z" #'+vterm/toggle
+        ;; :n "M-e" #'+eshell/toggle
+        :n "M-o" #'hippie-expand
+        ;; :desc "Hyperbole" "C-h h" #'hyperbole
+        :leader
+        ;; :desc "Hippie Expand" "e" #'hippie-expand
+        :desc "Jump to register" "r" #'jump-to-register))
+
+;; Quicker window management keybindings
+;; (bind-key* "C-j" #'evil-window-down)
+;; (bind-key* "C-k" #'evil-window-up)
+;; (bind-key* "C-h" #'evil-window-left)
+;; (bind-key* "C-l" #'evil-window-right)
+;; (bind-key* "C-q" #'evil-window-delete)
+(bind-key* "M-q" #'kill-current-buffer)
+(bind-key* "M-w" #'+workspace/close-window-or-workspace)
+(bind-key* "M-n" #'next-buffer)
+(bind-key* "M-p" #'previous-buffer)
+(bind-key* "M-z" #'+vterm/toggle)
+(bind-key* "M-e" #'+eshell/toggle)
+;; (bind-key* (kbd "M-<return>") #'+vterm/here)
+;; (bind-key* (kbd "M-E") #'+eshell/here)
+
+(defun disable-cursor()
+  (setq-local evil-normal-state-cursor '(bar . 0))
+  (hl-line-mode -1)
+  )
+(add-hook 'dashboard-mode-hook 'disable-cursor)
+
+;; Smooth scrolling
+;; requires good-scroll.el
+;; (good-scroll-mode 1)
+;; (setq good-scroll-duration 0.4
+;;      good-scroll-step 270
+;;      good-scroll-render-rate 0.03)
+
+;; (global-set-key (kbd "<next>") #'good-scroll-up-full-screen)
+;; (global-set-key (kbd "<prior>") #'good-scroll-down-full-screen)
+
+;; (setq scroll-margin 10)
+;; (setq hscroll-margin 10)
+
+;; Requires for faster loading
+(require 'org-agenda)
+(require 'dired)
+
+;; Garbage collection to speed things up
+(add-hook 'after-init-hook
+          #'(lambda ()
+              (setq gc-cons-threshold (* 100 1024 1024))))
+(add-hook 'focus-out-hook 'garbage-collect)
+(run-with-idle-timer 5 t 'garbage-collect)
+
+;; Neotree fun
+(defun neotree-snipe-dir ()
+  (interactive)
+  (if (projectile-project-root)
+      (neotree-dir (projectile-project-root))
+    (neotree-dir (file-name-directory (file-truename (buffer-name))))
+    )
+  )
+
+(map! :leader :desc "Open neotree here" "o n" #'neotree-snipe-dir
+      :desc "Hide neotree" "o N" #'neotree-hide)
+
+;; For camelCase
+(global-subword-mode 1)
+
+;; ripgrep as grep
+(setq grep-command "rg -nS --no-heading "
+      grep-use-null-device nil)
+
+;; Mini-frames ;; cool but kinda suboptimal atm
+                                        ;(add-load-path! "~/.emacs.d/mini-frame")
+;; (require 'mini-frame)
+(setq mini-frame-ignore-commands '(evil-ex-search-forward helpful-variable helpful-callable))
+(setq mini-frame-show-parameters
+      '((left . 216)
+        (top . 240)
+        (width . 0.78)
+        (height . 20)
+        (alpha-background . 90))
+      )
+(setq mini-frame-detach-on-hide nil)
+(setq mini-frame-resize t)
+(setq resize-mini-frames t)
+(setq mini-frame-standalone nil)
+;; (mini-frame-mode 1)
+
+;; Automatically show images but manually control their size
+;; (setq org-startup-with-inline-images t
+;;       org-image-actual-width nil)
+
+(require 'evil-org)
+(require 'evil-org-agenda)
+(add-hook 'org-mode-hook 'evil-org-mode -100)
+
+;; Top-level headings should be bigger!
+(custom-set-faces!
+  `(outline-1 :height 1.3 :foreground ,(nth 1 (nth 14 doom-themes--colors)))
+  `(outline-2 :height 1.25 :foreground ,(nth 1 (nth 15 doom-themes--colors)))
+  `(outline-3 :height 1.2 :foreground ,(nth 1 (nth 19 doom-themes--colors)))
+  `(outline-4 :height 1.1 :foreground ,(nth 1 (nth 23 doom-themes--colors)))
+  `(outline-5 :height 1.1 :foreground ,(nth 1 (nth 24 doom-themes--colors)))
+  `(outline-6 :height 1.1 :foreground ,(nth 1 (nth 16 doom-themes--colors)))
+  `(outline-7 :height 1.05 :foreground ,(nth 1 (nth 18 doom-themes--colors)))
+  `(outline-8 :height 1.05 :foreground ,(nth 1 (nth 11 doom-themes--colors)))
+  '(variable-pitch :family "JetBrainsMono")
+  `(org-agenda-date :inherit 'unspecified :foreground ,(nth 1 (nth 19 doom-themes--colors)) :weight bold :height 1.1)
+  `(org-agenda-date-today :inherit 'unspecified :foreground ,(nth 1 (nth 15 doom-themes--colors)) :weight bold :height 1.1)
+  `(org-agenda-date-weekend :inherit 'unspecified :foreground ,(nth 1 (nth 24 doom-themes--colors)) :weight bold :height 1.1)
+  `(org-agenda-date-weekend-today :inherit 'unspecified :foreground ,(nth 1 (nth 15 doom-themes--colors)) :weight bold :height 1.1)
+  )
+
+(after! org (org-eldoc-load))
+
+;; (with-eval-after-load 'org (global-org-modern-mode))
+
+;; Add frame borders and window dividers
+;; (modify-all-frames-parameters
+;;  '((right-divider-width . 5)
+;;    (internal-border-width . 5)))
+;; (dolist (face '(window-divider
+;;                 window-divider-first-pixel
+;;                 window-divider-last-pixel))
+;;   (face-spec-reset-face face)
+;;   (set-face-foreground face (face-attribute 'default :background)))
+;; (set-face-background 'fringe (face-attribute 'default :background))
+
+
+(setq
+ ;; Edit settings
+ org-auto-align-tags nil
+ org-tags-column 0
+ org-special-ctrl-a/e t
+ org-insert-heading-respect-content t
+
+ ;; Org styling, hide markup etc.
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-ellipsis "…")
+
+(setq-default line-spacing 0)
+
+;; Automatic table of contents is nice
+(if (require 'toc-org nil t)
+    (progn
+      (add-hook 'org-mode-hook 'toc-org-mode)
+      (add-hook 'markdown-mode-hook 'toc-org-mode))
+  (warn "toc-org not found"))
+
+;; Better for org source blocks
+(setq electric-indent-mode nil)
+(setq org-src-window-setup 'current-window)
+(set-popup-rule! "^\\*Org Src"
+  :side 'top'
+  :size 0.9)
+
+
+;; Horizontal scrolling tables
+;; (add-load-path! "~/.emacs.d/phscroll")
+;; (setq org-startup-truncated nil)
+;; (with-eval-after-load "org"
+;;   (require 'org-phscroll))
+;; (setq phscroll-calculate-in-pixels t)
+
+;; Org side tree outline
+;; (add-load-path! "~/.emacs.d/org-side-tree")
+;; (require 'org-side-tree)
+;; (setq org-side-tree-persistent nil)
+;; (setq org-side-tree-fontify t)
+;; (setq org-side-tree-enable-folding t)
+;; (defun org-side-tree-create-or-toggle ()
+;;   (interactive)
+;;   (if (or (org-side-tree-has-tree-p) (eq major-mode 'org-side-tree-mode))
+;;       (org-side-tree-toggle)
+;;       (org-side-tree)))
+;; (map! :leader
+;;       "O t" #'org-side-tree-create-or-toggle)
+;; (map! :map org-side-tree-mode-map
+;;       "SPC" nil)
+
+;; (require 'org-download)
+;; Drag-and-drop to `dired`
+;; (add-hook 'dired-mode-hook 'org-download-enable)
+
+;; system-wm-type, wayland or x11? only should be considered if system-nix-profile is "personal" or "work"
+;; (if (string= system-wm-type "wayland")
+;;   (setq org-download-screenshot-method "grim -g \"$(slurp)\" %s")
+;;   (setq org-download-screenshot-method "flameshot gui -p %s")
+;; )
+
+;; (after! org-download
+;;    (setq org-download-method 'directory))
+
+;; (after! org
+;;   (setq-default org-download-image-dir "img/"
+;;         org-download-heading-lvl nil))
+
+;; (add-to-list 'display-buffer-alist '("^*Async Shell Command*" . (display-buffer-no-window)))
+
+;; (defun org-download-clipboard-basename ()
+;;   (interactive)
+;;   (setq org-download-path-last-dir org-download-image-dir)
+;;   (setq org-download-image-dir (completing-read "directory: " (-filter #'f-directory-p (directory-files-recursively "." "" t)) nil t))
+;;   (org-download-clipboard (completing-read "basename: " '() nil nil))
+;;   (setq org-download-image-dir org-download-path-last-dir)
+;; )
+
+;; (map! :leader
+;;       :desc "Insert a screenshot"
+;;       "i s" 'org-download-screenshot
+;;       :desc "Insert image from clipboard"
+;;       "i p" 'org-download-clipboard
+;;       "i P" 'org-download-clipboard-basename)
+
+;; (defun org-new-file-from-template()
+;;   "Copy a template from ~/Templates into a time stamped unique-named file in the
+;; same directory as the org-buffer and insert a link to this file."
+;;   (interactive)
+;;   (setq template-file (completing-read "Template file:" (directory-files "~/Templates")))
+;;   (setq filename
+;;         (concat
+;;          (make-temp-name
+;;           (concat (file-name-directory (buffer-file-name))
+;;                   "files/"
+;;                   (file-name-nondirectory (buffer-file-name))
+;;                   "_"
+;;                   (format-time-string "%Y%m%d_%H%M%S_")) ) (file-name-extension template-file t)))
+;;   (copy-file (concat user-home-directory "/Templates/" template-file) filename)
+;;   (setq prettyname (read-from-minibuffer "Pretty name:"))
+;;   (insert (concat "[[./files/" (file-name-nondirectory filename) "][" prettyname "]]"))
+;;   (org-display-inline-images))
+
+;; (map! :leader
+;;       :desc "Create a new file from a template and insert a link at point"
+;;       "i t" 'my-org-new-file-from-template)
+
+;; (if (not (string= system-nix-profile "wsl"))
+;;   (when (require 'openwith nil 'noerror)
+;;      (setq openwith-associations
+;;            (list
+;;            (list (openwith-make-extension-regexp
+;;                   '("mpg" "mpeg" "mp3" "mp4"
+;;                     "avi" "wmv" "wav" "mov" "flv"
+;;                     "ogm" "ogg" "mkv"))
+;;                     "mpv"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("doc" "xls" "ppt" "odt" "ods" "odg" "odp"))
+;;                     "libreoffice"
+;;                     '(file))
+;;                '("\\.lyx" "lyx" (file))
+;;                '("\\.chm" "kchmviewer" (file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("pdf" "ps" "ps.gz" "dvi"))
+;;                     "atril"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("kdenlive"))
+;;                     "kdenlive-accel"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("kra"))
+;;                     "krita"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("blend" "blend1"))
+;;                     "blender"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("helio"))
+;;                     "helio"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("svg"))
+;;                     "inkscape"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("flp"))
+;;                     "flstudio"
+;;                     '(file))
+;;            (list (openwith-make-extension-regexp
+;;                   '("mid"))
+;;                     "rosegarden"
+;;                     '(file))
+;;                ))
+;;      (openwith-mode 1)))
+
+;; (add-load-path! "~/.emacs.d/org-krita")
+;; (require 'org-krita)
+;; (add-hook 'org-mode-hook 'org-krita-mode)
+;; (setq org-krita-extract-filename "preview.png")
+;; (setq org-krita-scale 1)
+
+;; (add-load-path! "~/.emacs.d/org-xournalpp")
+;; (require 'org-xournalpp)
+;; (add-hook 'org-mode-hook 'org-xournalpp-mode)
+;; (setq org-xournalpp-template-getter
+;;   '(closure
+;;     (t)
+;;     nil
+;;     (file-truename "~/Templates/template.xopp") ; use my own template
+;;   )
+;; )
+
+;; override width to static 250 for now
+;; so I don't have massive images in org mode (scrolling not fun)
+;; (defun org-xournalpp--create-image (link refresh)
+;;   "Extract svg/png from given LINK and return image.
+
+;; Regenerate the cached inline image, if REFRESH is true.
+
+;; If the path from LINK does not exist, nil is returned."
+;;   (let ((width 250)
+;;         (xopp-path (f-expand (org-element-property :path link))))
+;;     (when (f-exists? xopp-path)
+;;         (if width
+;;             (create-image (org-xournalpp--get-image xopp-path refresh)
+;;                           org-xournalpp-image-type
+;;                           nil
+;;                           :width width)
+;;           (create-image (org-xournalpp--get-image xopp-path refresh)
+;;                         org-xournalpp-image-type
+;;                         nil)))))
+
+;; Online images inside of org mode is pretty cool
+;; This snippit is from Tobias on Stack Exchange
+;; https://emacs.stackexchange.com/questions/42281/org-mode-is-it-possible-to-display-online-images
+;; (require 'org-yt)
+
+;; (defun org-image-link (protocol link _description)
+;;   "Interpret LINK as base64-encoded image data."
+;;   (cl-assert (string-match "\\`img" protocol) nil
+;;              "Expected protocol type starting with img")
+;;   (let ((buf (url-retrieve-synchronously (concat (substring protocol 3) ":" link))))
+;;     (cl-assert buf nil
+;;                "Download of image \"%s\" failed." link)
+;;     (with-current-buffer buf
+;;       (goto-char (point-min))
+;;       (re-search-forward "\r?\n\r?\n")
+;;       (buffer-substring-no-properties (point) (point-max)))))
+
+;; (org-link-set-parameters
+;;  "imghttp"
+;;  :image-data-fun #'org-image-link)
+
+;; (org-link-set-parameters
+;;  "imghttps"
+;;  :image-data-fun #'org-image-link)
+
+;; Mermaid diagrams
+;; (setq ob-mermaid-cli-path "~/.nix-profile/bin/mmdc")
+
+;;;-- projectile wrapper commands ;;;--
+;; (require 'sudo-edit)
+;; (setq sudo-edit-local-method "doas")
+
+;; (map! :leader
+;;       :desc "Open current file as root"
+;;       "f U" #'sudo-edit-current-file)
+;; (map! :leader
+;;       :desc "Find a file and open as root"
+;;       "f u" #'sudo-edit-find-file)
+
+(require 'focus)
+
+(map! :leader
+      :prefix ("F" . "Focus mode")
+      :desc "Toggle focus mode"
+      "t" 'focus-mode
+
+      :desc "Pin focused section"
+      "p" 'focus-pin
+
+      :desc "Unpin focused section"
+      "u" 'focus-unpin)
+
+;; (add-to-list 'focus-mode-to-thing '(org-mode . org-element))
+;; (add-to-list 'focus-mode-to-thing '(python-mode . paragraph))
+;; (add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
+
+                                        ;(add-hook 'org-mode-hook #'focus-mode)
+
+;;;-- projectile wrapper commands ;;;--
+(require 'sudo-edit)
+(setq sudo-edit-local-method "doas")
+
+(map! :leader
+      :desc "Open current file as root"
+      "f U" #'sudo-edit)
+(map! :leader
+      :desc "Find a file and open as root"
+      "f u" #'sudo-edit-find-file)
+
+(lsp-treemacs-sync-mode 1)
+
+(setq lsp-treemacs-deps-position-params
+      '((side . right)
+        (slot . 1)
+        (window-width . 35)))
+
+(setq lsp-treemacs-symbols-position-params
+      '((side . right)
+        (slot . 2)
+        (window-width . 35)))
+
+(map! :leader :desc "Open treemacs symbol outliner" "o s" #'lsp-treemacs-symbols
+      :desc "Hide neotree" "o S" #'treemacs-quit)
+
+;; (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode tex-mode latex-mode org-msg-edit-mode nix-mode))
