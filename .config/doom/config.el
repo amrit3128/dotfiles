@@ -588,3 +588,8 @@
       :desc "Hide neotree" "o S" #'treemacs-quit)
 
 ;; (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode tex-mode latex-mode org-msg-edit-mode nix-mode))
+
+;; Enable autorevert globally so that buffers update when files change on disk.
+;; Very useful when used with file syncing (i.e. syncthing)
+(setq global-auto-revert-mode nil)
+(setq auto-revert-use-notify t)

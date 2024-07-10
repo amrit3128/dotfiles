@@ -5,6 +5,7 @@
 #+BEGIN_QUOTE
 - [[#waybar-config][Waybar Config]]
   - [[#modules][Modules]]
+  - [[#configs][Configs]]
 - [[#hyprland-config][Hyprland Config]]
   - [[#main-file][Main file]]
   - [[#execs][Execs]]
@@ -727,6 +728,1712 @@
 }
 
 #+end_src
+** Configs
+*** Bottom Camellia
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_Camellia
+
+{
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 4,
+"fixed-center": true,
+"ipc": true,
+//"margin-top": 0,
+//"margin-bottom": 0,
+//"margin-left": 0,
+//"margin-right": 0,
+
+"modules-left": [
+	"hyprland/workspaces#cam",
+	"custom/separator#line",
+	"mpris",
+	"tray#cam",
+	"wlr/taskbar"],
+
+"modules-center": ["hyprland/window#cam"],
+
+"modules-right": [
+	"custom/backlight",
+	"backlight/slider",
+	"custom/speaker",
+	"pulseaudio/slider",
+	"battery#cam",
+	"clock#cam",
+	"network#cam"],
+
+// Additional modules //
+
+"hyprland/workspaces#cam": {
+	"active-only":false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"persistent-workspaces":{
+		"1": [],
+		"2": [],
+		"3": [],
+		"4": [],
+		"5": []
+	},
+		"format-icons": {
+		"1": "Uno",
+		"2": "Due",
+		"3": "Tre",
+		"4": "Quattro",
+		"5": "Cinque",
+		"6":"Sei",
+		"7":"Sette",
+		"8":"Otto",
+		"9":"Nove",
+		"10":"Dieci"
+	}
+},
+
+"hyprland/window#cam": {
+	"format": " {title}",
+	"max-length": 50,
+	"rewrite": {
+		"(.*) — Mozilla Firefox": " $1",
+		"(.*) - zsh": "> [$1]"
+},
+		"separate-outputs": true
+},
+
+"clock#cam": {
+	"interval": 60,
+	//"format": "{:%A, %I:%M %P}",
+	"format": "{:%A, %H:%M}",
+	"max-length": 25,
+
+},
+
+"battery#cam": {
+	"interval": 60,
+	"align": 0,
+	"rotate": 0,
+	//"bat": "BAT1",
+	//"adapter": "ACAD",
+	"full-at": 100,
+	"design-capacity": false,
+	"states": {
+	  "critical": 15
+			 },
+	"format": "{capacity}% {icon}",
+	"format-charging": " {capacity}%",
+	"format-plugged": "󱘖 {capacity}%",
+	"format-full": "{icon} Full",
+	"format-alt": "{icon} {time}",
+	"format-icons": ["", "", "", "", ""],
+	"format-time": "{H}h {M}min",
+	"tooltip": true,
+	"tooltip-format": "{timeTo} {power}w"
+},
+
+"pulseaudio/slider": {
+	"min": 0,
+	"max": 100,
+	"orientation": "horizontal"
+
+},
+
+"custom/speaker": {
+	"exec": "echo '🔊'",
+	"interval": 1,
+	"format": "{}"
+},
+
+"backlight/slider": {
+	"min": 0,
+	"max": 100,
+	"orientation": "horizontal",
+	"device": "intel_backlight"
+},
+
+"custom/backlight": {
+	"exec": "echo '✨'",
+	"interval": 1,
+	"format": "{}"
+},
+
+"tray#cam": {
+	//"icon-size": 16,
+	"spacing": 10
+},
+
+"network#cam": {
+	"format": "{ifname}",
+	"format-wifi": "{icon}",
+	"format-ethernet": "󰌘",
+	"format-disconnected": "󰌙",
+	"tooltip-format": "{ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+	"format-linked": "󰈁 {ifname} (No IP)",
+	"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+	"tooltip-format-ethernet": "{ifname} 󰌘",
+	"tooltip-format-disconnected": "󰌙 Disconnected",
+	"max-length": 50,
+	"format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+},
+
+"wlr/taskbar": {
+	"format": "{icon}",
+	//"icon-size": 14,
+	//"icon-theme": "Numix-Circle",
+	"tooltip-format": "{title}",
+	"on-click": "activate",
+	"on-click-middle": "close",
+	"ignore-list": [
+	    "kitty"
+		],
+		"app_ids-mapping": {
+		  "firefoxdeveloperedition": "firefox-developer-edition"
+		},
+		"rewrite": {
+			"Firefox Web Browser": "Firefox",
+			"Foot Server": "Terminal"
+		}
+}
+}
+
+#+end_src
+
+*** Bottom Chrysanthemum
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_Chrysanthemum
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 5,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 5,
+"margin-right": 5,
+
+"modules-left": ["clock#gar", "mpris", "tray"],
+
+"modules-center": ["hyprland/workspaces"],
+
+"modules-right": ["pulseaudio#gar","backlight#gar", "battery#gar"],
+
+// M O D U L E S //
+"clock#gar": {
+  //"format": "{:%A, %I:%M %P}",
+	"format": "{:%a %d | %H:%M}",
+	"format-alt": "{:%A, %d %B, %Y (%R)}"
+},
+
+"hyprland/window#gar": {
+  "format": "{}",
+  "max-length": 60
+},
+
+"tray#gar": {
+  "icon-size": 15,
+  "spacing": 10
+},
+
+"pulseaudio#gar": {
+  "format": "{icon} {volume}%",
+  "format-bluetooth": "{icon} {volume}%",
+  "format-bluetooth-muted": " {icon}",
+  "format-muted": "󰸈",
+  "format-icons": {
+    "headphone": "",
+    "hands-free": "",
+    "headset": "",
+    "phone": "",
+    "portable": "",
+    "car": "",
+    "default": ["", "", ""]
+  },
+  "on-click": "pamixer --toggle-mute",
+  "on-click-right": "pavucontrol",
+  "tooltip": false
+},
+
+"backlight#gar": {
+  //"device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["", ""]
+},
+
+"battery#gar": {
+  "interval": 60,
+  "align": 0,
+  "rotate": 0,
+  //"bat": "BAT1",
+  //"adapter": "ACAD",
+  "full-at": 100,
+  "design-capacity": false,
+  "states": {
+    "good": 95,
+    "warning": 30,
+    "critical": 15
+       },
+  "format": "{icon}  {capacity}%",
+  "format-charging": " {capacity}%",
+  "format-plugged": "󱘖 {capacity}%",
+  "format-full": "{icon} Full",
+  "format-alt": "{icon} {time}",
+  "format-icons": ["", "", "", "", ""],
+  "format-time": "{H}h {M}min",
+  "tooltip": true,
+  "tooltip-format": "{timeTo} {power}w",
+  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click-right": "~/.config/hypr/scripts/Wlogout.sh",
+},
+}
+
+#+end_src
+
+*** Bottom Default Laptop
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_Default Laptop
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"margin-top": 6,
+"margin-left": 8,
+"margin-right": 8,
+
+"modules-left": [
+	"hyprland/workspaces#pacman",
+	"custom/separator#dot-line",
+	"cpu",
+	"custom/separator#dot-line",
+	"temperature",
+	"custom/separator#dot-line",
+	"memory",
+	],
+
+"modules-center": [
+	"custom/menu",
+	"custom/separator#dot-line",
+	"idle_inhibitor",
+	"custom/separator#dot-line",
+	"clock",
+	"custom/separator#dot-line",
+	"custom/light_dark",
+	"custom/separator#dot-line",
+	"custom/lock",
+	],
+
+"modules-right": [
+	"tray",
+	"custom/separator#dot-line",
+	"bluetooth",
+	"custom/separator#dot-line",
+	"battery",
+	"custom/separator#dot-line",
+	"backlight",
+	"custom/separator#dot-line",
+	"pulseaudio",
+	"custom/separator#dot-line",
+	"pulseaudio#microphone",
+	"custom/separator#dot-line",
+	"custom/power",
+	],
+}
+
+#+end_src
+
+*** Bottom Gardenia
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_Gardenia
+
+{
+
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 5,
+"fixed-center": false,
+"ipc": true,
+//"margin-top": 5,
+"margin-bottom": 5,
+"width": 768,
+
+"modules-left": ["clock#gar", "mpris", "tray"],
+
+"modules-center": ["hyprland/workspaces#kanji"],
+
+"modules-right": ["pulseaudio#gar","backlight#gar", "battery#gar"],
+
+
+// M O D U L E S //
+
+"clock#gar": {
+  //"format": "{:%A, %I:%M %P}",
+	"format": "{:%a %d | %H:%M}",
+	"format-alt": "{:%A, %d %B, %Y (%R)}"
+},
+
+"hyprland/window#gar": {
+  "format": "{}",
+  "max-length": 60
+},
+
+"tray#gar": {
+  "icon-size": 15,
+  "spacing": 10
+},
+
+"pulseaudio#gar": {
+  "format": "{icon} {volume}%",
+  "format-bluetooth": "{icon} {volume}%",
+  "format-bluetooth-muted": " {icon}",
+  "format-muted": "󰸈",
+  "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+  "on-click": "pamixer --toggle-mute",
+  "on-click-right": "pavucontrol",
+  "tooltip": false
+},
+
+"backlight#gar": {
+  "device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["", ""]
+},
+
+"battery#gar": {
+  "interval": 60,
+  "align": 0,
+  "rotate": 0,
+  //"bat": "BAT1",
+  //"adapter": "ACAD",
+  "full-at": 100,
+  "design-capacity": false,
+  "states": {
+    "good": 95,
+    "warning": 30,
+    "critical": 15
+       },
+  "format": "{icon}  {capacity}%",
+  "format-charging": " {capacity}%",
+  "format-plugged": "󱘖 {capacity}%",
+  "format-full": "{icon} Full",
+  "format-alt": "{icon} {time}",
+  "format-icons": ["", "", "", "", ""],
+  "format-time": "{H}h {M}min",
+  "tooltip": true,
+  "tooltip-format": "{timeTo} {power}w",
+  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click-right": "~/.config/hypr/scripts/Wlogout.sh",
+},
+
+}
+
+#+end_src
+
+*** Bottom Left SouthWest
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_left_SouthWest
+
+[{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 2,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 6,
+"margin-right": 6,
+"margin-bottom": 2,
+
+"modules-left": [
+    "custom/menu",
+    "cpu",
+    "temperature",
+    "memory",
+    "disk",
+    ],
+
+"modules-center": [
+    //"hyprland/window",
+    "hyprland/workspaces#roman",
+	],
+
+"modules-right": [
+    //"network",
+    //"bluetooth",
+	"custom/weather",
+    "battery",
+    "backlight",
+    "pulseaudio",
+    //"wireplumber",
+    "pulseaudio#microphone",
+    "keyboard-state",
+    "custom/power",
+    ],
+},
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "left",
+"height": 650,
+"margin-top": 8,
+"margin-bottom": 8,
+"margin-left": 3,
+//"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+    "custom/lock",
+    "idle_inhibitor",
+    ],
+
+"modules-center": [
+    "clock#vertical",
+    ],
+
+"modules-right": [
+	"mpris",
+    "tray",
+    "custom/light_dark",
+    ],
+
+}]
+
+#+end_src
+
+*** Bottom Peony
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_Peony
+
+{
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 4,
+"fixed-center": true,
+"ipc": true,
+//"margin-top": 5,
+"margin-bottom": 5,
+"width": 1444,
+
+"modules-left": ["hyprland/workspaces#roman", "mpris", "tray#peony"],
+
+"modules-center": ["clock#peony"],
+
+"modules-right": [
+	"battery#peony",
+	"custom/separator#blank",
+	"backlight#peony",
+	"custom/separator#blank",
+	"pulseaudio",
+	"custom/separator#blank",
+	"temperature",
+	"custom/separator#blank",
+	"network#peony"],
+
+
+//M O D U L E S //
+
+"clock#peony": {
+	"interval": 60,
+	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+	//"format": "{:%B | %a %d, %Y | %I:%M %p}",
+	"format": "{:%B | %a %d, %Y | %H:%M}",
+	"format-alt": "{:%a %b %d, %G}",
+},
+
+"wireplumber#peony": {
+	"format": "{icon} {volume}",
+	"format-muted": " Mute",
+	"on-click": "~/.config/hypr/scripts/Volume.sh --toggle",
+	"on-click-right": "pavucontrol -t 3",
+	"on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
+	"on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
+	"format-icons": ["", "", "󰕾", ""],
+},
+
+"backlight#peony": {
+	"device": "intel_backlight",
+	"format": "{percent}% {icon}",
+	"format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+},
+
+"network#peony": {
+	"format": "{ifname}",
+	"format-wifi": "{icon}",
+	"format-ethernet": "󰌘",
+	"format-disconnected": "󰌙",
+	"tooltip-format": "{ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+	"format-linked": "󰈁 {ifname} (No IP)",
+	"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+	"tooltip-format-ethernet": "{ifname} 󰌘",
+	"tooltip-format-disconnected": "󰌙 Disconnected",
+	"max-length": 50,
+	"format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+},
+
+"battery#peony": {
+	"interval": 60,
+	"align": 0,
+	"rotate": 0,
+	//"bat": "BAT1",
+	//"adapter": "ACAD",
+	"full-at": 100,
+	"design-capacity": false,
+	"states": {
+    "good": 95,
+    "warning": 30,
+    "critical": 15
+	},
+	"format": "{icon}  {capacity}%",
+	"format-charging": " {capacity}%",
+	"format-plugged": "󱘖 {capacity}%",
+	"format-full": "{icon} Full",
+	"format-alt": "{icon} {time}",
+	"format-icons": ["", "", "", "", ""],
+	"format-time": "{H}h {M}min",
+	"tooltip": true,
+	"tooltip-format": "{timeTo} {power}w",
+	"on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+	"on-click-right": "~/.config/hypr/scripts/Wlogout.sh",
+},
+
+"tray#peony": {
+	"icon-size": 17,
+	"spacing": 8,
+}
+}
+
+#+end_src
+
+*** Bottom Right SouthEast
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_right_SouthEast
+
+[{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 2,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 6,
+"margin-right": 6,
+"margin-bottom": 2,
+
+"modules-left": [
+    "custom/menu",
+    "cpu",
+    "temperature",
+    "memory",
+    "disk",
+    ],
+
+"modules-center": [
+    //"hyprland/window",
+    "hyprland/workspaces#roman",
+	],
+
+"modules-right": [
+    //"network",
+    //"bluetooth",
+	"custom/weather",
+    "battery",
+    "backlight",
+    "pulseaudio",
+    //"wireplumber",
+    "pulseaudio#microphone",
+    "keyboard-state",
+    "custom/power",
+    ],
+},
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "right",
+"height": 650,
+"margin-top": 8,
+"margin-bottom": 8,
+//"margin-left": 3,
+"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+    "custom/lock",
+    "idle_inhibitor",
+    ],
+
+"modules-center": [
+    "clock#vertical",
+    ],
+
+"modules-right": [
+	"mpris",
+    "tray",
+    "custom/light_dark",
+    ],
+
+}]
+
+#+end_src
+
+*** Bottom Sleek
+#+begin_src json :tangle ~/.config/waybar/configs/bottom_Sleek
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "bottom",
+"height": 14,
+"margin-left": 10,
+"margin-right": 10,
+"margin-bottom": 2,
+
+"modules-left": [
+	"custom/menu",
+	"custom/separator#blank_2",
+	"mpris",
+	"hyprland/window"
+],
+
+"modules-center": [
+	"hyprland/workspaces"
+],
+
+"modules-right": [
+	"tray",
+	"pulseaudio",
+	"clock",
+	"custom/power"
+
+	],
+
+
+// Additional format / customize modules
+
+"custom/power": {
+	"format": " ",
+	"icon-size": 20,
+	"tooltip": false,
+},
+
+"clock": {
+	//"format": "{:%I:%M %p - %d/%b}", //for AM/PM
+    "format": "{:%H:%M - %d/%b}", // 24H
+	"tooltip": false
+},
+}
+
+#+end_src
+
+*** Left WestWing
+#+begin_src json :tangle ~/.config/waybar/configs/left_WestWing
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "left",
+"margin-top": 8,
+"margin-bottom": 8,
+"margin-left": 3,
+//"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+	"clock#vertical",
+	"custom/light_dark",
+],
+
+"modules-center": [
+	"hyprland/workspaces",
+],
+
+"modules-right": [
+	"mpris",
+	"tray",
+	//"network",
+	"backlight#vertical",
+	"pulseaudio#microphone_vertical",
+	"pulseaudio#vertical",
+	"custom/power_vertical",
+	"custom/menu",
+],
+}
+
+#+end_src
+
+*** Right EastWing
+#+begin_src json :tangle ~/.config/waybar/configs/right_EastWing
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "right",
+"margin-top": 8,
+"margin-bottom": 8,
+//"margin-left": 3,
+"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+	"clock#vertical",
+	"custom/light_dark",
+],
+
+"modules-center": [
+	"hyprland/workspaces",
+],
+
+"modules-right": [
+	"mpris",
+	"tray",
+	//"network",
+	"backlight#vertical",
+	"pulseaudio#microphone_vertical",
+	"pulseaudio#vertical",
+	"custom/power_vertical",
+	"custom/menu",
+],
+}
+
+#+end_src
+
+*** Top Bottom Summit Split
+#+begin_src json :tangle ~/.config/waybar/configs/top_bottom_SummitSplit
+
+[{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 1,
+"margin-left": 8,
+"margin-right": 8,
+
+"modules-left": [
+	"cpu",
+	"temperature",
+	"memory",
+	"disk",
+	],
+
+"modules-center": [
+	"idle_inhibitor",
+	"clock",
+	"custom/light_dark",
+	],
+
+"modules-right": [
+	"custom/weather",
+	"battery",
+	"backlight",
+	"bluetooth",
+	"network",
+	//"custom/updater",
+	"custom/cycle_wall",
+	"custom/lock",
+	],
+},
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 5,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 8,
+"margin-right": 8,
+//"margin-bottom": 0,
+
+"modules-left": [
+	"custom/menu",
+	"wlr/taskbar",
+	 ],
+
+"modules-center": [
+	"hyprland/workspaces#4",
+	],
+
+"modules-right": [
+	"hyprland/window",
+	"tray",
+	"mpris",
+	"keyboard-state",
+	"pulseaudio",
+	//"wireplumber",
+	"pulseaudio#microphone",
+	"custom/power",
+	],
+
+}]
+
+#+end_src
+
+*** Top Camellia
+#+begin_src json :tangle ~/.config/waybar/configs/top_Camellia
+
+{
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"margin-top": 0,
+//"margin-bottom": 0,
+//"margin-left": 0,
+//"margin-right": 0,
+
+"modules-left": [
+	"hyprland/workspaces#cam",
+	"custom/separator#line",
+	"mpris",
+	"tray#cam",
+	"wlr/taskbar"
+	],
+
+"modules-center": ["hyprland/window#cam"],
+
+"modules-right": [
+	"custom/backlight",
+	"backlight/slider",
+	"custom/speaker",
+	"pulseaudio/slider",
+	"battery#cam",
+	"clock#cam",
+	"network#cam"
+	],
+
+// Additional modules //
+
+"hyprland/workspaces#cam": {
+	"active-only":false,
+	"all-outputs": true,
+	"format": "{icon}",
+	"show-special": false,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"persistent-workspaces":{
+		"1": [],
+		"2": [],
+		"3": [],
+		"4": [],
+		"5": []
+	},
+		"format-icons": {
+		"1": "Uno",
+		"2": "Due",
+		"3": "Tre",
+		"4": "Quattro",
+		"5": "Cinque",
+		"6":"Sei",
+		"7":"Sette",
+		"8":"Otto",
+		"9":"Nove",
+		"10":"Dieci"
+	}
+},
+
+"hyprland/window#cam": {
+	"format": " {title}",
+	"max-length": 50,
+	"rewrite": {
+		"(.*) — Mozilla Firefox": " $1",
+		"(.*) - zsh": "> [$1]"
+},
+		"separate-outputs": true
+},
+
+"clock#cam": {
+	"interval": 60,
+	//"format": "{:%A, %I:%M %P}",
+	"format": "{:%A, %H:%M}",
+	"max-length": 25,
+
+},
+
+"battery#cam": {
+	"interval": 60,
+	"align": 0,
+	"rotate": 0,
+	//"bat": "BAT1",
+	//"adapter": "ACAD",
+	"full-at": 100,
+	"design-capacity": false,
+	"states": {
+	  "critical": 15
+			 },
+	"format": "{capacity}% {icon}",
+	"format-charging": " {capacity}%",
+	"format-plugged": "󱘖 {capacity}%",
+	"format-full": "{icon} Full",
+	"format-alt": "{icon} {time}",
+	"format-icons": ["", "", "", "", ""],
+	"format-time": "{H}h {M}min",
+	"tooltip": true,
+	"tooltip-format": "{timeTo} {power}w"
+},
+
+"pulseaudio/slider": {
+	"min": 0,
+	"max": 100,
+	"orientation": "horizontal",
+
+},
+
+"custom/speaker": {
+	"exec": "echo '🔊'",
+	"interval": 1,
+	"format": "{}"
+},
+
+"backlight/slider": {
+	"min": 0,
+	"max": 100,
+	"orientation": "horizontal",
+	//"device": "intel_backlight"
+},
+
+"custom/backlight": {
+	"exec": "echo '✨'",
+	"interval": 1,
+	"format": "{}"
+},
+
+"tray#cam": {
+	//"icon-size": 16,
+	"spacing": 10
+},
+
+"network#cam": {
+	"format": "{ifname}",
+	"format-wifi": "{icon}",
+	"format-ethernet": "󰌘",
+	"format-disconnected": "󰌙",
+	"tooltip-format": "{ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+	"format-linked": "󰈁 {ifname} (No IP)",
+	"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+	"tooltip-format-ethernet": "{ifname} 󰌘",
+	"tooltip-format-disconnected": "󰌙 Disconnected",
+	"max-length": 50,
+	"format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+},
+
+"wlr/taskbar": {
+	"format": "{icon}",
+	//"icon-size": 14,
+	//"icon-theme": "Numix-Circle",
+	"tooltip-format": "{title}",
+	"on-click": "activate",
+	"on-click-middle": "close",
+	"ignore-list": [
+	    "kitty"
+		],
+		"app_ids-mapping": {
+		  "firefoxdeveloperedition": "firefox-developer-edition"
+		},
+		"rewrite": {
+			"Firefox Web Browser": "Firefox",
+			"Foot Server": "Terminal"
+		}
+}
+}
+
+#+end_src
+
+*** Top Chrysanthemum
+#+begin_src json :tangle ~/.config/waybar/configs/top_Chrysanthemum
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 5,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 5,
+"margin-right": 5,
+"margin-top": 0,
+
+"modules-left": ["clock#gar", "mpris", "tray"],
+
+"modules-center": ["hyprland/workspaces"],
+
+"modules-right": ["pulseaudio#gar","backlight#gar", "battery#gar"],
+
+// M O D U L E S //
+
+"clock#gar": {
+  //"format": "{:%A, %I:%M %P}",
+	"format": "{:%a %d | %H:%M}",
+	"format-alt": "{:%A, %d %B, %Y (%R)}"
+},
+
+"hyprland/window#gar": {
+  "format": "{}",
+  "max-length": 60
+},
+
+"tray#gar": {
+  "icon-size": 15,
+  "spacing": 10
+},
+
+"pulseaudio#gar": {
+  "format": "{icon} {volume}%",
+  "format-bluetooth": "{icon} {volume}%",
+  "format-bluetooth-muted": " {icon}",
+  "format-muted": "󰸈",
+  "format-icons": {
+    "headphone": "",
+    "hands-free": "",
+    "headset": "",
+    "phone": "",
+    "portable": "",
+    "car": "",
+    "default": ["", "", ""]
+  },
+  "on-click": "pamixer --toggle-mute",
+  "on-click-right": "pavucontrol",
+  "tooltip": false
+},
+
+"backlight#gar": {
+  //"device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["", ""]
+},
+
+"battery#gar": {
+  "interval": 60,
+  "align": 0,
+  "rotate": 0,
+  //"bat": "BAT1",
+  //"adapter": "ACAD",
+  "full-at": 100,
+  "design-capacity": false,
+  "states": {
+    "good": 95,
+    "warning": 30,
+    "critical": 15
+       },
+  "format": "{icon}  {capacity}%",
+  "format-charging": " {capacity}%",
+  "format-plugged": "󱘖 {capacity}%",
+  "format-full": "{icon} Full",
+  "format-alt": "{icon} {time}",
+  "format-icons": ["", "", "", "", ""],
+  "format-time": "{H}h {M}min",
+  "tooltip": true,
+  "tooltip-format": "{timeTo} {power}w",
+  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click-right": "~/.config/hypr/scripts/Wlogout.sh",
+},
+}
+
+#+end_src
+
+*** Top Default Laptop
+#+begin_src json :tangle ~/.config/waybar/configs/top_Default Laptop
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"output": ["eDP-1"],
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 3,
+"margin-left": 8,
+"margin-right": 8,
+
+"modules-left": [
+	"hyprland/window",
+	"custom/separator#dot-line",
+	"hyprland/workspaces#pacman",
+	"custom/separator#dot-line",
+	"cpu",
+	"custom/separator#dot-line",
+	"memory",
+	"custom/separator#dot-line",
+  "temperature",
+	"custom/separator#dot-line",
+  "custom/cava_mviz",
+	],
+
+"modules-center": [
+	"custom/menu",
+	"custom/separator#dot-line",
+	"idle_inhibitor",
+	"custom/separator#dot-line",
+	"clock",
+	"custom/separator#dot-line",
+	"mpris",
+	"custom/separator#dot-line",
+  //"custom/cava_mviz",
+	"custom/lock",
+	],
+
+"modules-right": [
+	"network#speed",
+	"custom/separator#dot-line",
+	"tray",
+	"custom/separator#dot-line",
+	"bluetooth",
+	"custom/separator#dot-line",
+	"battery",
+	"custom/separator#dot-line",
+	"backlight",
+	"custom/separator#dot-line",
+	"pulseaudio",
+	"custom/separator#dot-line",
+	"pulseaudio#microphone",
+	"custom/separator#dot-line",
+	"custom/power",
+	],
+}
+
+#+end_src
+
+*** Top Gardenia
+#+begin_src json :tangle ~/.config/waybar/configs/top_Gardenia
+
+{
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 5,
+"fixed-center": false,
+"ipc": true,
+"margin-top": 5,
+//"margin-bottom": 5,
+"width": 768,
+
+"modules-left": ["clock#gar", "mpris", "tray"],
+
+"modules-center": ["hyprland/workspaces#kanji"],
+
+"modules-right": ["pulseaudio#gar","backlight#gar", "battery#gar", "idle_inhibitor",],
+
+
+// M O D U L E S //
+
+"clock#gar": {
+  //"format": "{:%A, %I:%M %P}",
+	"format": "{:%a %d | %H:%M}",
+	"format-alt": "{:%A, %d %B, %Y (%R)}"
+},
+
+"hyprland/window#gar": {
+  "format": "{}",
+  "max-length": 60
+},
+
+"tray#gar": {
+  "icon-size": 15,
+  "spacing": 10
+},
+
+"pulseaudio#gar": {
+  "format": "{icon} {volume}%",
+  "format-bluetooth": "{icon} {volume}%",
+  "format-bluetooth-muted": " {icon}",
+  "format-muted": "󰸈",
+  "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+  "on-click": "pamixer --toggle-mute",
+  "on-click-right": "pavucontrol",
+  "tooltip": false
+},
+
+"backlight#gar": {
+  "device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["", ""]
+},
+
+"battery#gar": {
+  "interval": 60,
+  "align": 0,
+  "rotate": 0,
+  //"bat": "BAT1",
+  //"adapter": "ACAD",
+  "full-at": 100,
+  "design-capacity": false,
+  "states": {
+    "good": 95,
+    "warning": 30,
+    "critical": 15
+       },
+  "format": "{icon}  {capacity}%",
+  "format-charging": " {capacity}%",
+  "format-plugged": "󱘖 {capacity}%",
+  "format-full": "{icon} Full",
+  "format-alt": "{icon} {time}",
+  "format-icons": ["", "", "", "", ""],
+  "format-time": "{H}h {M}min",
+  "tooltip": true,
+  "tooltip-format": "{timeTo} {power}w",
+  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click-right": "~/.config/hypr/scripts/Wlogout.sh",
+},
+
+}
+
+#+end_src
+
+*** Top Left NorthWest
+#+begin_src json :tangle ~/.config/waybar/configs/top_left_NorthWest
+
+[{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"width": 1200,
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 2,
+"margin-left": 8,
+"margin-right": 8,
+
+"modules-left": [
+    "custom/menu",
+	"custom/separator#blank_2",
+	"group/motherboard",
+    ],
+
+"modules-center": [
+    //"hyprland/window",
+    "hyprland/workspaces#pacman",
+	],
+
+"modules-right": [
+    "network",
+    "bluetooth",
+	"custom/weather",
+	"custom/separator#blank_2",
+	"group/audio",
+	"custom/separator#blank_2",
+    "keyboard-state",
+    "custom/power",
+    ],
+},
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "left",
+"height": 650,
+"margin-top": 8,
+"margin-bottom": 8,
+"margin-left": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+    "custom/lock",
+    "idle_inhibitor",
+    ],
+
+"modules-center": [
+    "clock#vertical",
+    ],
+
+"modules-right": [
+	"mpris",
+    "tray",
+    "custom/light_dark",
+    ],
+
+}]
+
+#+end_src
+
+*** Top Minimal Long
+#+begin_src json :tangle ~/.config/waybar/configs/top_Minimal_Long
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 6,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 3,
+"margin-left": 8,
+"margin-right": 8,
+
+"modules-left": [
+	"custom/menu",
+	"custom/separator#blank_2",
+	"hyprland/workspaces#pacman",
+	"custom/separator#blank_2",
+	"mpris",
+	"tray",
+	],
+"modules-center": [
+	"clock",
+	],
+"modules-right": [
+	"group/motherboard",
+	"custom/separator#blank_2",
+	"group/laptop",
+	"custom/separator#blank_2",
+	"group/audio",
+	"custom/separator#blank_2",
+	"custom/power",
+	],
+
+}
+
+#+end_src
+
+*** Top Minimal Short
+#+begin_src json :tangle ~/.config/waybar/configs/top_Minimal_Short
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "top",
+"width": 1050,
+"margin-top": 3,
+
+"modules-left": [
+	"clock",
+	"custom/weather",
+	],
+
+"modules-center": [
+	"hyprland/workspaces#roman"
+	],
+
+"modules-right": [
+	"custom/menu",
+	"tray",
+	"mpris",
+	"network",
+	"bluetooth",
+	"backlight",
+	"pulseaudio",
+	"battery",
+	"custom/power"],
+}
+
+#+end_src
+
+*** Top Peony
+#+begin_src json :tangle ~/.config/waybar/configs/top_Peony
+
+{
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+//"output":"eDP-1",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 4,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 5,
+//"margin-bottom": 5,
+"width": 1444,
+
+"modules-left": ["hyprland/workspaces#roman"],
+
+"modules-center": ["clock#peony"],
+
+"modules-right": [
+  "tray#peony",
+  "mpris",
+	"battery#peony",
+	"custom/separator#blank",
+	"backlight#peony",
+	"custom/separator#blank",
+	"pulseaudio",
+	"custom/separator#blank",
+	"temperature",
+	"custom/separator#blank"],
+
+
+//M O D U L E S //
+
+"clock#peony": {
+	"interval": 60,
+	"tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+	//"format": "{:%B | %a %d, %Y | %I:%M %p}",
+	"format": "{:%B | %a %d, %Y | %H:%M}",
+	"format-alt": "{:%a %b %d, %G}",
+},
+
+"wireplumber#peony": {
+	"format": "{icon} {volume}",
+	"format-muted": " Mute",
+	"on-click": "~/.config/hypr/scripts/Volume.sh --toggle",
+	"on-click-right": "pavucontrol -t 3",
+	"on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
+	"on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
+	"format-icons": ["", "", "󰕾", ""],
+},
+
+"network#peony": {
+	"format": "{ifname}",
+	"format-wifi": "{icon}",
+	"format-ethernet": "󰌘",
+	"format-disconnected": "󰌙",
+	"tooltip-format": "{ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
+	"format-linked": "󰈁 {ifname} (No IP)",
+	"tooltip-format-wifi": "{essid} {icon} {signalStrength}%",
+	"tooltip-format-ethernet": "{ifname} 󰌘",
+	"tooltip-format-disconnected": "󰌙 Disconnected",
+	"max-length": 50,
+	"format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
+},
+
+"battery#peony": {
+	"interval": 60,
+	"align": 0,
+	"rotate": 0,
+	//"bat": "BAT1",
+	//"adapter": "ACAD",
+	"full-at": 100,
+	"design-capacity": false,
+	"states": {
+    "good": 95,
+    "warning": 30,
+    "critical": 15
+	},
+	"format": "{icon}  {capacity}%",
+	"format-charging": " {capacity}%",
+	"format-plugged": "󱘖 {capacity}%",
+	"format-full": "{icon} Full",
+	"format-alt": "{icon} {time}",
+	"format-icons": ["", "", "", "", ""],
+	"format-time": "{H}h {M}min",
+	"tooltip": true,
+	"tooltip-format": "{timeTo} {power}w",
+	"on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+	"on-click-right": "~/.config/hypr/scripts/Wlogout.sh",
+},
+
+"tray#peony": {
+	"icon-size": 17,
+	"spacing": 8,
+}
+}
+
+#+end_src
+
+*** Top Right NorthEast
+#+begin_src json :tangle ~/.config/waybar/configs/top_right_NorthEast
+
+[{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"width": 1200,
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-top": 2,
+"margin-left": 8,
+"margin-right": 8,
+
+"modules-left": [
+    "custom/menu",
+	"custom/separator#blank_2",
+	"group/motherboard",
+    ],
+
+"modules-center": [
+    //"hyprland/window",
+    "hyprland/workspaces#pacman",
+	],
+
+"modules-right": [
+    "network",
+    "bluetooth",
+	"custom/weather",
+	"custom/separator#blank_2",
+	"group/audio",
+	"custom/separator#blank_2",
+    "keyboard-state",
+    "custom/power",
+    ],
+},
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "right",
+"height": 650,
+"margin-top": 8,
+"margin-bottom": 8,
+//"margin-left": 3,
+"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+    "custom/lock",
+    "idle_inhibitor",
+    ],
+
+"modules-center": [
+    "clock#vertical",
+    ],
+
+"modules-right": [
+	"mpris",
+    "tray",
+    "custom/light_dark",
+    ],
+
+}]
+
+#+end_src
+
+*** Top Sleek
+#+begin_src json :tangle ~/.config/waybar/configs/top_Sleek
+
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "top",
+"height": 14,
+"margin-left": 10,
+"margin-right": 10,
+"margin-top": 2,
+
+"modules-left": [
+	"custom/menu",
+	"custom/separator#blank_2",
+	"mpris",
+	"hyprland/window"
+],
+
+"modules-center": [
+	"hyprland/workspaces"
+],
+
+"modules-right": [
+	"tray",
+	"pulseaudio",
+	"clock",
+	"custom/power"
+
+	],
+
+
+// Additional format / customize modules
+
+"custom/power": {
+	"format": " ",
+	"icon-size": 20,
+	"tooltip": false,
+},
+
+"clock": {
+	//"format": "{:%I:%M %p - %d/%b}", //for AM/PM
+    "format": "{:%H:%M - %d/%b}", // 24H
+	"tooltip": false
+},
+}
+
+#+end_src
+
 * Hyprland Config
 ** Main file
 #+begin_src conf :tangle ~/.config/hypr/hyprland.conf
