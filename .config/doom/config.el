@@ -200,11 +200,11 @@
 ;; (bind-key* (kbd "M-<return>") #'+vterm/here)
 ;; (bind-key* (kbd "M-E") #'+eshell/here)
 
-(defun disable-cursor()
-  (setq-local evil-normal-state-cursor '(bar . 0))
-  (hl-line-mode -1)
-  )
-(add-hook 'dashboard-mode-hook 'disable-cursor)
+;; (defun disable-cursor()
+;;   (setq-local evil-normal-state-cursor '(bar . 0))
+;;   (hl-line-mode -1)
+;;   )
+;; (add-hook 'dashboard-mode-hook 'disable-cursor)
 
 ;; Smooth scrolling
 ;; requires good-scroll.el
@@ -220,8 +220,8 @@
 ;; (setq hscroll-margin 10)
 
 ;; Requires for faster loading
-(require 'org-agenda)
-(require 'dired)
+;; (require 'org-agenda)
+;; (require 'dired)
 
 ;; Garbage collection to speed things up
 (add-hook 'after-init-hook
@@ -270,9 +270,9 @@
 ;; (setq org-startup-with-inline-images t
 ;;       org-image-actual-width nil)
 
-(require 'evil-org)
-(require 'evil-org-agenda)
-(add-hook 'org-mode-hook 'evil-org-mode -100)
+;; (require 'evil-org)
+;; (require 'evil-org-agenda)
+;; (add-hook 'org-mode-hook 'evil-org-mode -100)
 
 ;; Top-level headings should be bigger!
 (custom-set-faces!
@@ -291,7 +291,7 @@
   `(org-agenda-date-weekend-today :inherit 'unspecified :foreground ,(nth 1 (nth 15 doom-themes--colors)) :weight bold :height 1.1)
   )
 
-(after! org (org-eldoc-load))
+;; (after! org (org-eldoc-load))
 
 ;; (with-eval-after-load 'org (global-org-modern-mode))
 
@@ -307,33 +307,33 @@
 ;; (set-face-background 'fringe (face-attribute 'default :background))
 
 
-(setq
+;; (setq
  ;; Edit settings
- org-auto-align-tags nil
- org-tags-column 0
- org-special-ctrl-a/e t
- org-insert-heading-respect-content t
+ ;; org-auto-align-tags nil
+ ;; org-tags-column 0
+ ;; org-special-ctrl-a/e t
+ ;; org-insert-heading-respect-content t
 
  ;; Org styling, hide markup etc.
- org-hide-emphasis-markers t
- org-pretty-entities t
- org-ellipsis "…")
+ ;; org-hide-emphasis-markers t
+ ;; org-pretty-entities t
+ ;; org-ellipsis "…")
 
-(setq-default line-spacing 0)
+;; (setq-default line-spacing 0)
 
 ;; Automatic table of contents is nice
-(if (require 'toc-org nil t)
-    (progn
-      (add-hook 'org-mode-hook 'toc-org-mode)
-      (add-hook 'markdown-mode-hook 'toc-org-mode))
-  (warn "toc-org not found"))
+;; (if (require 'toc-org nil t)
+;;     (progn
+;;       (add-hook 'org-mode-hook 'toc-org-mode)
+;;       (add-hook 'markdown-mode-hook 'toc-org-mode))
+;;   (warn "toc-org not found"))
 
 ;; Better for org source blocks
-(setq electric-indent-mode nil)
-(setq org-src-window-setup 'current-window)
-(set-popup-rule! "^\\*Org Src"
-  :side 'top'
-  :size 0.9)
+;; (setq electric-indent-mode nil)
+;; (setq org-src-window-setup 'current-window)
+;; (set-popup-rule! "^\\*Org Src"
+;;   :side 'top'
+;;   :size 0.9)
 
 
 ;; Horizontal scrolling tables
