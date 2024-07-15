@@ -1,11 +1,3 @@
-#                             _
-#   _____  ___ __   ___  _ __| |_ ___
-#  / _ \ \/ / '_ \ / _ \| '__| __/ __|
-# |  __/>  <| |_) | (_) | |  | |_\__ \
-#  \___/_/\_\ .__/ \___/|_|   \__|___/
-#           |_|
-#
-
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="/home/amrit/.local/bin:$PATH"
 export PATH="/home/amrit/.config/emacs/bin:$PATH"
@@ -17,3 +9,4 @@ export LC_ALL=en_US.UTF-8
 export EDITOR="/usr/bin/nvim"
 export MPD_HOST=127.0.0.1
 export MPD_PORT=6601
+export NIX_REMOTE=daemon
