@@ -40,7 +40,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Org/")
+(setq org-directory "~/org/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -80,7 +80,7 @@
 (setq display-line-numbers-type 'relative)
 ;; activate line numbering in all buffers/modes
 ;; (global-display-line-numbers-mode)
-(set-face-attribute 'default nil :height 170)
+(set-face-attribute 'default nil :height 120)
 
 ;; Configure org-babel for jupyter
 (use-package! jupyter
@@ -609,154 +609,3 @@
      (doom-blend 'base8 'functions 0.1)
      (face-attribute 'default :foreground))))
 
-(after! org
-  (setq org-directory "~/Org"                     ; let's put files here
-        org-list-allow-alphabetical t             ; have a. A. a) A) list bullets
-        org-use-property-inheritance t            ; it's convenient to have properties inherited
-        org-fold-catch-invisible-edits 'smart          ; try not to accidently do weird stuff in invisible regions
-        org-log-done 'time                        ; having the time a item is done sounds convenient
-        org-roam-directory "~/Org/roam/"))        ; same thing, for roam
-
-;; org-agenda-config
-(after! org-agenda
-  (setq org-agenda-files (list "~/org/agenda.org"
-                               "~/org/todo.org"))
-  (setq org-agenda-window-setup 'current-window
-        org-agenda-restore-windows-after-quit t
-        org-agenda-show-all-dates nil
-        org-agenda-time-in-grid t
-        org-agenda-show-current-time-in-grid t
-        org-agenda-start-on-weekday 1
-        org-agenda-span 7
-        org-agenda-tags-column  0
-        org-agenda-block-separator nil
-        org-agenda-category-icon-alist nil
-        org-agenda-sticky t)
-  (setq org-agenda-prefix-format
-        '((agenda . "%i %?-12t%s")
-          (todo .   "%i")
-          (tags .   "%i")
-          (search . "%i")))
-  (setq org-agenda-sorting-strategy
-        '((agenda deadline-down scheduled-down todo-state-up time-up
-                  habit-down priority-down category-keep)
-          (todo   priority-down category-keep)
-          (tags   timestamp-up priority-down category-keep)
-          (search category-keep))))
-
-
-(after! org
-  (remove-hook 'org-agenda-finalize-hook '+org-exclude-agenda-buffers-from-workspace-h)
-  (remove-hook 'org-agenda-finalize-hook
-               '+org-defer-mode-in-agenda-buffers-h))
-
-(after! org
-  (setq org-agenda-deadline-faces
-        '((1.0 . error)
-          (1.0 . org-warning)
-          (0.5 . org-upcoming-deadline)
-          (0.0 . org-upcoming-distant-deadline))))
-
-;; org modern
-(setq ;; Edit settings
- org-auto-align-tags nil
- org-tags-column 0
- org-fold-catch-invisible-edits 'show-and-error
- org-special-ctrl-a/e t
- org-insert-heading-respect-content t
-
- ;; Org styling, hide markup etc.
- org-hide-emphasis-markers t
- org-pretty-entities t
- org-ellipsis "…"
-
- ;; Agenda styling
- org-agenda-tags-column 0
- org-agenda-block-separator ?─
- org-agenda-time-grid
- '((daily today require-timed)
-   (800 1000 1200 1400 1600 1800 2000)
-   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
- org-agenda-current-time-string
- "⭠ now ─────────────────────────────────────────────────")
-(global-org-modern-mode)
-
-
-(use-package svg-tag-mode
-  :commands svg-tag-mode
-  :config
-  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
-  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
-  (defconst day-re "[A-Za-z]\\{3\\}")
-  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
-  (defun svg-progress-percent (value)
-    (svg-image (svg-lib-concat
-                (svg-lib-progress-bar (/ (string-to-number value) 100.0)
-                                  nil :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-                (svg-lib-tag (concat value "%")
-                             nil :stroke 0 :margin 0)) :ascent 'center))
-
-  (defun svg-progress-count (value)
-    (let* ((seq (mapcar #'string-to-number (split-string value "/")))
-           (count (float (car seq)))
-           (total (float (cadr seq))))
-    (svg-image (svg-lib-concat
-                (svg-lib-progress-bar (/ count total) nil
-                                      :margin 0 :stroke 2 :radius 3 :padding 2 :width 11)
-                (svg-lib-tag value nil
-                             :stroke 0 :margin 0)) :ascent 'center)))
-
-  (setq svg-tag-tags
-        `(
-          ;; Org tags
-          (":\\([A-Za-z0-9]+\\)" . ((lambda (tag) (svg-tag-make tag))))
-          (":\\([A-Za-z0-9]+[ \-]\\)" . ((lambda (tag) tag)))
-          ;; Task priority
-          ("\\[#[A-Z]\\]" . ( (lambda (tag)
-                                (svg-tag-make tag :face 'org-priority
-                                              :beg 2 :end -1 :margin 0))))
-
-          ;; Progress
-          ("\\(\\[[0-9]\\{1,3\\}%\\]\\)" . ((lambda (tag)
-                                              (svg-progress-percent (substring tag 1 -2)))))
-          ("\\(\\[[0-9]+/[0-9]+\\]\\)" . ((lambda (tag)
-                                            (svg-progress-count (substring tag 1 -1)))))
-
-          ;; TODO / DONE
-          ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
-          ("DONE" . ((lambda (tag) (svg-tag-make "DONE" :face 'org-done :margin 0))))
-
-
-          ;; Citation of the form [cite:@Knuth:1984]
-          ("\\(\\[cite:@[A-Za-z]+:\\)" . ((lambda (tag)
-                                            (svg-tag-make tag
-                                                          :inverse t
-                                                          :beg 7 :end -1
-                                                          :crop-right t))))
-          ("\\[cite:@[A-Za-z]+:\\([0-9]+\\]\\)" . ((lambda (tag)
-                                                  (svg-tag-make tag
-                                                                :end -1
-                                                                :crop-left t))))
-
-
-          ;; Active date (with or without day name, with or without time)
-          (,(format "\\(<%s>\\)" date-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-          (,(format "\\(<%s \\)%s>" date-re day-time-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-          (,(format "<%s \\(%s>\\)" date-re day-time-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
-
-          ;; Inactive date  (with or without day name, with or without time)
-           (,(format "\\(\\[%s\\]\\)" date-re) .
-            ((lambda (tag)
-               (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-           (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
-            ((lambda (tag)
-               (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-           (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
-            ((lambda (tag)
-               (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
