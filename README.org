@@ -1,0 +1,5 @@
+#+title: Readme
+
+* Links to the config files
+** [[file:hyprland.org::*Execs][Hyprland]]
+** [[file:waybar.org][Wayabar]]
