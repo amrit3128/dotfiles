@@ -612,3 +612,16 @@
 ;; (use-package consult-omni
 ;; 	:straight (consult-omni :type git :host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el"))
 ;;         :after consult)
+
+(gptel-make-ollama "Ollama"             ;Any name of your choosing
+  :host "localhost:11434"               ;Where it's running
+  :stream t                             ;Stream responses
+  :models '("mistral:latest"))          ;List of models
+
+;; OPTIONAL configuration
+(setq
+ gptel-model "mistral:latest"
+ gptel-backend (gptel-make-ollama "Ollama"
+                 :host "localhost:11434"
+                 :stream t
+                 :models '("mistral:latest")))
