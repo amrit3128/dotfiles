@@ -1,72 +1,53 @@
 #!/bin/bash
 
-music_icon="$HOME/.config/dunst/icons/music.png"
+music_icon="$HOME/.config/swaync/icons/music.png"
 
 # Play the next track
 play_next() {
     playerctl next
-    show_music_notification_next
+    sleep 0.5
+    song_title=$(playerctl metadata title)
+    song_artist=$(playerctl metadata artist)
+    notify-send -e -u low -i "$music_icon" "Now Playing:" "$song_title\nby $song_artist"
 }
 
 # Play the previous track
 play_previous() {
     playerctl previous
-    show_music_notification_previous
+    sleep 0.5
+    song_title=$(playerctl metadata title)
+    song_artist=$(playerctl metadata artist)
+    notify-send -e -u low -i "$music_icon" "Now Playing:" "$song_title\nby $song_artist"
 }
 
 # Toggle play/pause
 toggle_play_pause() {
     playerctl play-pause
+    sleep 0.5
     show_music_notification
 }
 
 # Stop playback
 stop_playback() {
     playerctl stop
-    dunstify -r 123 -i "$music_icon" "Playback Stopped"
+    sleep 0.5
+    notify-send -e -u low -i "$music_icon" "Playback Stopped"
 }
 
-show_music_notification_next() {
-    status=$(playerctl status)
-    if [[ "$status" == "Playing" ]]; then
-        song_title=$(playerctl metadata title)
-        song_artist=$(playerctl metadata artist)
-        dunstify -r 123 -i "$music_icon" "Next Song"
-    elif [[ "$status" == "Paused" ]]; then
-        dunstify -r 123 -i "$music_icon" "Playback Paused"
-    fi
-}
-show_music_notification_previous() {
-    status=$(playerctl status)
-    if [[ "$status" == "Playing" ]]; then
-        song_title=$(playerctl metadata title)
-        song_artist=$(playerctl metadata artist)
-        dunstify -r 123 -i "$music_icon" "Previous Song"
-    elif [[ "$status" == "Paused" ]]; then
-        dunstify -r 123 -i "$music_icon" "Playback Paused"
-    fi
-}
-# # Display Dunst notification with song information
-# show_music_notification() {
-#     status=$(playerctl status)
-#     if [[ "$status" == "Playing" ]]; then
-#         song_title=$(playerctl metadata title)
-#         song_artist=$(playerctl metadata artist)
-#         dunstify -r 123 -i "$music_icon" "Now Playing:" "$song_title\nby $song_artist"
-#     elif [[ "$status" == "Paused" ]]; then
-#         dunstify -r 123 -i "$music_icon" "Playback Paused"
-#     fi
-# }
-
+# Display notification with song information
 show_music_notification() {
     status=$(playerctl status)
     if [[ "$status" == "Playing" ]]; then
+        # sleep 0.5
         song_title=$(playerctl metadata title)
-        dunstify -r 123 -i "$music_icon" "Now Playing:" "$song_title"
+        song_artist=$(playerctl metadata artist)
+        notify-send -e -u low -i "$music_icon" "Now Playing:" "$song_title\nby $song_artist"
     elif [[ "$status" == "Paused" ]]; then
-        dunstify -r 123 -i "$music_icon" "Playback Paused"
+        # sleep 0.5
+        notify-send -e -u low -i "$music_icon" "Playback Paused"
     fi
 }
+
 # Get media control action from command line argument
 case "$1" in
     "--nxt")

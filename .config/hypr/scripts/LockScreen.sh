@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONFIG="$HOME/.config/swaylock/config"
+# For Hyprlock
 
-#hyprlock
-sleep 0.5s; swaylock --config ${CONFIG} & disown
+pidof hyprlock || hyprlock -q 
+

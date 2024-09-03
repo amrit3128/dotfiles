@@ -1,37 +1,29 @@
-# #!/bin/bash
-#
-# # This script will randomly go through the files of a directory, setting it
-# # up as the wallpaper at regular intervals
-# #
-# # NOTE: this script uses bash (not POSIX shell) for the RANDOM variable
-#
-# pywal_refresh=$HOME/.config/hypr/scripts/RefreshNoWaybar.sh
-# pywal_script=$HOME/.config/hypr/scripts/PywalSwww.sh
-#
-# if [[ $# -lt 1 ]] || [[ ! -d $1   ]]; then
-# 	echo "Usage:
-# 	$0 <dir containing images>"
-# 	exit 1
-# fi
-#
-# # Edit below to control the images transition
-# export SWWW_TRANSITION_FPS=60
-# export SWWW_TRANSITION_TYPE=simple
-#
-# # This controls (in seconds) when to switch to the next image
-# INTERVAL=3600
-#
-# while true; do
-# 	find "$1" \
-# 		| while read -r img; do
-# 			echo "$((RANDOM % 1000)):$img"
-# 		done \
-# 		| sort -n | cut -d':' -f2- \
-# 		| while read -r img; do
-# 			swww img "$img" 
-# 			# $pywal_refresh
-# 			$pywal_script
-# 			sleep $INTERVAL
-# 			
-# 		done
-# done
+#!/bin/bash
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# Script for Random Wallpaper ( CTRL ALT W)
+
+wallDIR="$HOME/Pictures/wallpapers"
+scriptsDir="$HOME/.config/hypr/scripts"
+
+focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
+
+PICS=($(find ${wallDIR} -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \)))
+RANDOMPICS=${PICS[ $RANDOM % ${#PICS[@]} ]}
+
+
+# Transition config
+FPS=60
+TYPE="any"
+# TYPE="random"
+DURATION=1
+BEZIER=".43,1.19,1,.4"
+# SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION --transition-bezier $BEZIER"
+SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
+
+
+swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOMPICS} $SWWW_PARAMS
+
+
+${scriptsDir}/WallustSwww.sh
+sleep 1
+# ${scriptsDir}/Refresh.sh

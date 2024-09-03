@@ -9,6 +9,8 @@
 (setq user-full-name "Amritanshu"
       user-mail-address "tripathyamritanshu7@gmail.com")
 
+(set-face-attribute 'default nil :family "JetBrainsMono Nerd Font" :height 130)
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -612,16 +614,10 @@
 ;; (use-package consult-omni
 ;; 	:straight (consult-omni :type git :host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el"))
 ;;         :after consult)
-
-(gptel-make-ollama "Ollama"             ;Any name of your choosing
-  :host "localhost:11434"               ;Where it's running
-  :stream t                             ;Stream responses
-  :models '("mistral:latest"))          ;List of models
-
-;; OPTIONAL configuration
-(setq
- gptel-model "mistral:latest"
- gptel-backend (gptel-make-ollama "Ollama"
-                 :host "localhost:11434"
-                 :stream t
-                 :models '("mistral:latest")))
+(use-package lsp-ui)
+;; (setq lsp-ui-doc-show-with-cursor t)
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil))
+;; (add-hook 'comint-output-filter-functions 'comint-osc-process-output)
+;; (setq comint-process-echoes t)

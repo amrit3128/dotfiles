@@ -1,45 +1,37 @@
 #!/bin/bash
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
+# Script for waybar styles
 
 set -euo pipefail
 IFS=$'\n\t'
 
 # Define directories
-config_dir="$HOME/.config/waybar/style"
-waybar_config="$HOME/.config/waybar/style.css"
-scripts_dir="$HOME/.config/hypr/scripts"
-# rofi_config="$HOME/.config/rofi/config-waybar-style.rasi"
-rofi_config="$HOME/.config/rofi/config-compact.rasi"
+waybar_styles="$HOME/.config/waybar/style"
+waybar_style="$HOME/.config/waybar/style.css"
+SCRIPTSDIR="$HOME/.config/hypr/scripts"
+rofi_config="$HOME/.config/rofi/config-waybar-style.rasi"
 
 # Function to display menu options
 menu() {
     options=()
     while IFS= read -r file; do
-        if [ -f "$config_dir/$file" ]; then
+        if [ -f "$waybar_styles/$file" ]; then
             options+=("$(basename "$file" .css)")
         fi
-    done < <(find "$config_dir" -maxdepth 1 -type f -name '*.css' -exec basename {} \; | sort)
+    done < <(find "$waybar_styles" -maxdepth 1 -type f -name '*.css' -exec basename {} \; | sort)
     
     printf '%s\n' "${options[@]}"
 }
 
 # Apply selected style
 apply_style() {
-    ln -sf "$config_dir/$1.css" "$waybar_config"
-    restart_waybar_if_needed
-}
-
-# Restart Waybar if it's running
-restart_waybar_if_needed() {
-    if pgrep -x "waybar" >/dev/null; then
-        pkill waybar
-        sleep 0.1  # Delay for Waybar to completely terminate
-    fi
-    "${scripts_dir}/Refresh.sh" &
+    ln -sf "$waybar_styles/$1.css" "$waybar_style"
+    "${SCRIPTSDIR}/Refresh.sh" &
 }
 
 # Main function
 main() {
-    choice=$(menu | rofi -dmenu -config "$rofi_config")
+    choice=$(menu | rofi -i -dmenu -config "$rofi_config")
 
     if [[ -z "$choice" ]]; then
         echo "No option selected. Exiting."
