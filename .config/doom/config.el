@@ -6,6 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
+;; (setq user-full-name "John Doe"
+;;       user-mail-address "john@doe.com")
 (setq user-full-name "Amritanshu"
       user-mail-address "tripathyamritanshu7@gmail.com")
 
@@ -34,7 +36,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-monokai-ristretto)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -85,15 +87,15 @@
 (set-face-attribute 'default nil :height 120)
 
 ;; Configure org-babel for jupyter
-(use-package! jupyter
-  :defer t
-  :init
-  (setq org-babel-default-header-args:jupyter-python
-        '((:session . "py") (:kernel . "python3")))
-  (setq ob-async-no-async-languages-alist '("jupyter-python")))
+;; (use-package! jupyter
+;;   :defer t
+;;   :init
+;;   (setq org-babel-default-header-args:jupyter-python
+;;         '((:session . "py") (:kernel . "python3")))
+;;   (setq ob-async-no-async-languages-alist '("jupyter-python")))
 
-(after! org
-  (require 'ob-jupyter))
+;; (after! org
+;;   (require 'ob-jupyter))
 
 ;; Setting the background blur
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -110,13 +112,15 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 (defun my-weebery-is-always-greater ()
-  (let* ((banner '("███████╗███╗   ███╗ █████╗  ██████╗███████╗"
+  (let* ((banner '(
+                   "███████╗███╗   ███╗ █████╗  ██████╗███████╗"
                    "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
                    "█████╗  ██╔████╔██║███████║██║     ███████╗"
                    "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
                    "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
                    "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"
-                   "         the editor that god uses          "))
+                   "         the editor that god uses          "
+                   ))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property
      (point)
@@ -615,9 +619,17 @@
 ;; 	:straight (consult-omni :type git :host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el"))
 ;;         :after consult)
 (use-package lsp-ui)
-;; (setq lsp-ui-doc-show-with-cursor t)
+(setq lsp-ui-doc-show-with-cursor t)
 (use-package org-tree-slide
   :custom
   (org-image-actual-width nil))
-;; (add-hook 'comint-output-filter-functions 'comint-osc-process-output)
-;; (setq comint-process-echoes t)
+
+(use-package olivetti)
+
+(use-package! drag-stuff
+   :defer t
+   :init
+  (map! "<M-up>"    #'drag-stuff-up
+        "<M-down>"  #'drag-stuff-down
+        "<M-left>"  #'drag-stuff-left
+        "<M-right>" #'drag-stuff-right))

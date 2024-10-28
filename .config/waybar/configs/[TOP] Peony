@@ -20,10 +20,10 @@
 "width": 1444,
 	
 "modules-left": [
-	"hyprland/workspaces#roman", 
-	"mpris", 
-	"custom/swaync", 
-	"tray"
+	//"custom/swaync", 
+	//"mpris",
+	"hyprland/workspaces",
+	"tray",
 	],
   
 "modules-center": ["clock#4"], 
@@ -34,8 +34,8 @@
 	"backlight",
 	"custom/separator#blank",
 	"pulseaudio",
-	"custom/separator#blank",
-	"temperature",
+	//"custom/separator#blank",
+	//"temperature",
 	"custom/separator#blank",	
 	"network"],
 

@@ -1,6 +1,4 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# Script for Random Wallpaper ( CTRL ALT W)
 
 wallDIR="$HOME/Pictures/wallpapers"
 scriptsDir="$HOME/.config/hypr/scripts"
@@ -26,4 +24,4 @@ swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOM
 
 ${scriptsDir}/WallustSwww.sh
 sleep 1
-# ${scriptsDir}/Refresh.sh
+${scriptsDir}/RefreshNoWaybar.sh

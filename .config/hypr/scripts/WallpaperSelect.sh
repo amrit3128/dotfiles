@@ -1,6 +1,4 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */ 
-# This script for selecting wallpapers (SUPER W)
 
 # WALLPAPERS PATH
 wallDIR="$HOME/Pictures/wallpapers"
@@ -107,4 +105,3 @@ sleep 0.5
 
 sleep 0.2
 "$SCRIPTSDIR/Refresh.sh"
-

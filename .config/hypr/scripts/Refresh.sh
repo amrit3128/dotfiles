@@ -15,6 +15,7 @@ file_exists() {
 
 # Kill already running processes
 _ps=(waybar rofi swaync ags)
+# _ps=(rofi swaync ags)
 for _prs in "${_ps[@]}"; do
     if pidof "${_prs}" >/dev/null; then
         pkill "${_prs}"

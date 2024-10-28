@@ -7,11 +7,11 @@
 	name = Amritanshu Tripathy
 	email = tripathyamritanshu7@gmail.com
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+	helper =
+	helper = !gh auth git-credential
 [core]
 	editor = nvim
 	pager = delta
@@ -24,7 +24,7 @@
 	diffFilter = delta --color-only
 
 [delta]
-	navigate = true    
+	navigate = true
 	dark = true
 
 [merge]

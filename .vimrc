@@ -91,19 +91,28 @@ if has('langmap') && exists('+langremap')
 endif
 
 set relativenumber
+set number
 set cursorline
 set paste
-colorscheme desert
 
 call plug#begin()
 
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'mattn/vim-lsp-settings'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'morhetz/gruvbox'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jasonccox/vim-wayland-clipboard'
 
 call plug#end()
+
+set wildmenu
+set path+=**
+syntax on
+set background=dark
+colorscheme retrobox
+set clipboard=unnamedplus

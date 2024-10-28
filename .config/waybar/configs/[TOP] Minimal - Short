@@ -11,7 +11,8 @@
 
 "modules-left": [
 	"clock",  
-	"custom/weather", 
+	//"custom/weather", 
+	"mpris", 
 	],
 
 "modules-center": [
@@ -19,12 +20,11 @@
 	],
 
 "modules-right": [
-	"custom/menu", 
-	"tray",
+	//"custom/menu", 
+	//"tray",
 	"custom/swaync",
-	"mpris", 
 	"network", 
-	"bluetooth", 
+	//"bluetooth", 
 	"backlight", 
 	"pulseaudio", 
 	"battery", 

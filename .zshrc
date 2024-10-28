@@ -64,7 +64,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Aliases
 alias hx='helix'
 alias c='clear'
-
 alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland'
 alias ls='lsd '
 alias cl='clear'
@@ -123,3 +122,13 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # To add support for TTYs this line can be optionally added.
 # source ~/.cache/wal/colors-tty.sh
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/amrit/.dart-cli-completion/zsh-config.zsh ]] && . /home/amrit/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+
+#. "$HOME/.atuin/bin/env"
+#
+#eval "$(atuin init zsh)"
