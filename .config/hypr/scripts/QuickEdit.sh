@@ -6,7 +6,6 @@ editor=${EDITOR:-nano}
 tty=kitty
 
 configs="$HOME/.config/hypr/configs"
-UserConfigs="$HOME/.config/hypr/UserConfigs"
 
 menu(){
   printf "1. edit Env-variables\n"
@@ -25,28 +24,28 @@ main() {
     choice=$(menu | rofi -i -dmenu -config ~/.config/rofi/config-compact.rasi | cut -d. -f1)
     case $choice in
         1)
-            $tty $editor "$UserConfigs/ENVariables.conf"
+            $tty $editor "$configs/ENVariables.conf"
             ;;
         2)
-            $tty $editor "$UserConfigs/WindowRules.conf"
+            $tty $editor "$configs/WindowRules.conf"
             ;;
         3)
-            $tty $editor "$UserConfigs/Startup_Apps.conf"
+            $tty $editor "$configs/Startup_Apps.conf"
             ;;
         4)
-            $tty $editor "$UserConfigs/UserKeybinds.conf"
+            $tty $editor "$configs/Keybinds.conf"
             ;;
         5)
-            $tty $editor "$UserConfigs/Monitors.conf"
+            $tty $editor "$configs/Monitors.conf"
             ;;
         6)
-            $tty $editor "$UserConfigs/Laptops.conf"
+            $tty $editor "$configs/Laptops.conf"
             ;;
         7)
-            $tty $editor "$UserConfigs/UserSettings.conf"
+            $tty $editor "$configs/Settings.conf"
             ;;
         8)
-            $tty $editor "$UserConfigs/WorkspaceRules.conf"
+            $tty $editor "$configs/WorkspaceRules.conf"
             ;;
 		9)
             $tty $editor "$configs/Settings.conf"
