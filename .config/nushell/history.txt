@@ -1,0 +1,34 @@
+ls
+clear
+ols
+clear
+lc
+clear
+ls
+clear
+ls
+clear
+nvim
+vum
+vim
+clear
+ls
+clear
+ps aux 
+ps
+ps x
+ps 
+ls
+clear
+lsblk
+clear
+ls
+cd .config/
+ls
+clear
+cd 
+clear
+claer
+clear
+clea
+clear
