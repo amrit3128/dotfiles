@@ -32,3 +32,44 @@ claer
 clear
 clea
 clear
+ls
+clear
+ls
+clear
+which rust
+which rustup
+clear
+ls
+clear
+ls
+clear
+ls
+clear
+ls
+clea
+clear
+ls
+nvim
+clear
+ls
+clear
+ls
+clear
+sl
+clear
+ls
+ls hello/
+rm -rf hello/
+ls hywiki/
+rm -rf hywiki/
+rm -rf quicklisp/
+ls
+clear
+ls
+rm -rf temp/
+clear
+ls
+neovide 
+which rustup
+clear
+which rustup

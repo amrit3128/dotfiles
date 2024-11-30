@@ -62,7 +62,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
-alias hx='helix'
 alias c='clear'
 alias code='code --enable-features=UseOzonePlatform --ozone-platform=wayland'
 alias logseq='logseq --enable-features=UseOzonePlatform --ozone-platform=wayland'

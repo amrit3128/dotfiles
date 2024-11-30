@@ -96,18 +96,7 @@ set cursorline
 set paste
 
 call plug#begin()
-
-
-Plug 'morhetz/gruvbox'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jasonccox/vim-wayland-clipboard'
-
 call plug#end()
 
 set wildmenu

@@ -109,6 +109,7 @@
 (package! mmm-mode)
 (package! nov)
 (package! spatial-navigate)
+(package! gptel)
 
 (when (package! lsp-bridge
         :recipe (:host github

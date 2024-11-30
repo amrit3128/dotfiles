@@ -310,16 +310,16 @@
 
 
 ;; (setq
- ;; Edit settings
- ;; org-auto-align-tags nil
- ;; org-tags-column 0
- ;; org-special-ctrl-a/e t
- ;; org-insert-heading-respect-content t
+;; Edit settings
+;; org-auto-align-tags nil
+;; org-tags-column 0
+;; org-special-ctrl-a/e t
+;; org-insert-heading-respect-content t
 
- ;; Org styling, hide markup etc.
- ;; org-hide-emphasis-markers t
- ;; org-pretty-entities t
- ;; org-ellipsis "…")
+;; Org styling, hide markup etc.
+;; org-hide-emphasis-markers t
+;; org-pretty-entities t
+;; org-ellipsis "…")
 
 ;; (setq-default line-spacing 0)
 
@@ -627,8 +627,8 @@
 (use-package olivetti)
 
 (use-package! drag-stuff
-   :defer t
-   :init
+  :defer t
+  :init
   (map! "<M-up>"    #'drag-stuff-up
         "<M-down>"  #'drag-stuff-down
         "<M-left>"  #'drag-stuff-left
@@ -637,6 +637,8 @@
 (setq deft-directory "~/notes/"
       deft-extensions '("org" "txt" "md" "tex")
       deft-recursive t)
+
+(setq org-directory "~/notes/")
 
 (require 'org)
 (require 'org-element)
@@ -762,3 +764,51 @@
                (org-image-update-overlay image-data el t t)))))))))
 
 (advice-add #'org-display-inline-images :after #'org-yt-display-inline-images)
+
+
+(defcustom ek-use-nerd-fonts t
+  "Configuration for using Nerd Fonts Symbols."
+  :type 'boolean
+  :group 'appearance)
+
+(use-package vertico
+  ;; :ensure t
+  ;; :hook
+  ;; :custom
+  ;; (vertico-count 10)                    ;; Number of candidates to display in the completion list.
+  ;; (vertico-resize nil)                  ;; Disable resizing of the vertico minibuffer.
+  ;; (vertico-cycle nil)                   ;; Do not cycle through candidates when reaching the end of the list.
+  :config
+  ;; Customize the display of the current candidate in the completion list.
+  ;; This will prefix the current candidate with “» ” to make it stand out.
+  ;; Reference: https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
+  (advice-add #'vertico--format-candidate :around
+              (lambda (orig cand prefix suffix index _start)
+                (setq cand (funcall orig cand prefix suffix index _start))
+                (concat
+                 (if (= vertico--index index)
+                     (propertize "» " 'face '(:foreground "#80adf0" :weight bold))
+                   "  ")
+                 cand))))
+
+(add-to-list 'treesit-language-source-alist
+             '(hyprlang "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang"))
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(use-package hyprlang-ts-mode
+  :straight (:type git :host github :repo "Nathan-Melaku/hyprlang-ts-mode"))
