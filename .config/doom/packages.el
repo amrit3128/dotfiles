@@ -63,9 +63,9 @@
 (package! ob-mermaid)
 (package! org-roam)
 (package! org-transclusion)
-(package! ess)
-(package! elpy)
-(package! python-cell)
+;; (package! ess)
+;; (package! elpy)
+;; (package! python-cell)
 (package! jupyter)
 (package! tree-sitter)
 (package! tree-sitter-langs)
@@ -76,9 +76,9 @@
 (package! org-fancy-priorities)
 (package! org-brain)
 (package! org-super-agenda)
-(package! vertico-posframe)
+;; (package! vertico-posframe)
 (package! spacious-padding)
-(package! undo-tree)
+;; (package! undo-tree)
 (package! slime)
 (package! zoxide)
 (package! fzf)
@@ -87,36 +87,40 @@
 (package! emmet-mode)
 (package! web-mode)
 (package! good-scroll)
-(package! mini-frame)
+;; (package! mini-frame)
 (package! focus)
 (package! direnv)
 (package! vimrc-mode)
 (package! lsp-treemacs)
+(package! lsp-ui)
+(package! kind-icon)
 (package! sudo-edit)
 (package! command-log-mode)
 (package! md4rd)
 (package! org-tree-slide)
 (package! olivetti)
-(package! mini-frame)
 (package! drag-stuff)
-(package! hyperbole)
+;; (package! hyperbole)
 (package! org-present)
-(package! peep-dired)
+;; (package! peep-dired)
 (package! try)
-(package! quickrun)
-(package! multifiles)
-(package! crux)
+;; (package! quickrun)
+;; (package! multifiles)
+;; (package! crux)
 (package! mmm-mode)
 (package! nov)
 (package! spatial-navigate)
-(package! gptel)
+;; (package! gptel)
 
-(when (package! lsp-bridge
-        :recipe (:host github
-                 :repo "manateelazycat/lsp-bridge"
-                 :branch "master"
-                 :files ("*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
-                 ;; do not perform byte compilation or native compilation for lsp-bridge
-                 :build (:not compile)))
-  (package! markdown-mode)
-  (package! yasnippet))
+;; (when (package! lsp-bridge
+;;         :recipe (:host github
+;;                  :repo "manateelazycat/lsp-bridge"
+;;                  :branch "master"
+;;                  :files ("*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+;;                  ;; do not perform byte compilation or native compilation for lsp-bridge
+;;                  :build (:not compile)))
+;;   (package! markdown-mode)
+;;   (package! yasnippet))
+
+;; (package! hyprlang-ts-mode
+;;   :recipe (:host github :repo "Nathan-Melaku/hyprlang-ts-mode"))

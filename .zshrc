@@ -42,7 +42,7 @@ bindkey "^[[1;5D" backward-word
 bindkey '\e[3;5~' kill-word
 
 # History
-HISTSIZE=10000
+HISTSIZE=1000000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -71,8 +71,8 @@ alias lc='clear'
 alias sl='ls'
 # alias cat='bat'
 alias songs='mpv --no-vid --shuffle https://youtube.com/playlist\?list\=PLAn1jVZ2DTg3BBMpAmtGKAdnZh6PimnVF\&si\=080D1NNZEBAwt6xm'
-alias sttt_scanline='sttt scanline --scanline-vertical true --scanline-reverse true --scanline-width 2 --scanline-scale-width 1.1 --scanline-scale-ratio 0.5'
-alias weather='curl wttr.in'
+# alias sttt_scanline='sttt scanline --scanline-vertical true --scanline-reverse true --scanline-width 2 --scanline-scale-width 1.1 --scanline-scale-ratio 0.5'
+# alias weather='curl wttr.in'
 
 function mkcd {
   if [ ! -n "$1" ]; then
@@ -132,3 +132,5 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #. "$HOME/.atuin/bin/env"
 #
 #eval "$(atuin init zsh)"
+
+# theme.sh tokyo-night

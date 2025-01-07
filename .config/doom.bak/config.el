@@ -6,6 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
+;; (setq user-full-name "John Doe"
+;;       user-mail-address "john@doe.com")
 (setq user-full-name "Amritanshu"
       user-mail-address "tripathyamritanshu7@gmail.com")
 
@@ -34,7 +36,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-monokai-ristretto)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -85,15 +87,15 @@
 (set-face-attribute 'default nil :height 120)
 
 ;; Configure org-babel for jupyter
-(use-package! jupyter
-  :defer t
-  :init
-  (setq org-babel-default-header-args:jupyter-python
-        '((:session . "py") (:kernel . "python3")))
-  (setq ob-async-no-async-languages-alist '("jupyter-python")))
+;; (use-package! jupyter
+;;   :defer t
+;;   :init
+;;   (setq org-babel-default-header-args:jupyter-python
+;;         '((:session . "py") (:kernel . "python3")))
+;;   (setq ob-async-no-async-languages-alist '("jupyter-python")))
 
-(after! org
-  (require 'ob-jupyter))
+;; (after! org
+;;   (require 'ob-jupyter))
 
 ;; Setting the background blur
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -104,19 +106,22 @@
  treemacs-is-never-other-window nil
  display-line-numbers 'relative
  projectile-globally-ignored-directories '("env" ".git" "venv" ".venv")
- projectile-project-search-path '("~/git_repos/" "~/codes/"))
+ ;; projectile-project-search-path '("~/git_repos/" "~/codes/"))
+ projectile-project-search-path '("~/codes/"))
 
 ;; Dashboard
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 (defun my-weebery-is-always-greater ()
-  (let* ((banner '("███████╗███╗   ███╗ █████╗  ██████╗███████╗"
+  (let* ((banner '(
+                   "███████╗███╗   ███╗ █████╗  ██████╗███████╗"
                    "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
                    "█████╗  ██╔████╔██║███████║██║     ███████╗"
                    "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
                    "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
                    "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"
-                   "         the editor that god uses          "))
+                   "         the editor that god uses          "
+                   ))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property
      (point)
@@ -140,23 +145,23 @@
 ;;    org-agenda-files (directory-files-recursively "~/org-notes/" "\.org$")
 ;;    ))
 
-(require 'lsp-mode)
+;; (require 'lsp-mode)
 
-(add-hook 'go-mode-hook #'lsp-deferred)
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;; (add-hook 'go-mode-hook #'lsp-deferred)
+;; (defun lsp-go-install-save-hooks ()
+;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-(lsp-register-custom-settings
- '(("gopls.completeUnimported" t t)
-   ("gopls.staticcheck" t t)))
+;; (lsp-register-custom-settings
+;;  '(("gopls.completeUnimported" t t)
+;;    ("gopls.staticcheck" t t)))
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp))))  ; or lsp-deferred
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                          (require 'lsp-pyright)
+;;                          (lsp))))  ; or lsp-deferred
 
 (setq custom-file null-device)
 
@@ -228,41 +233,12 @@
 (add-hook 'focus-out-hook 'garbage-collect)
 (run-with-idle-timer 5 t 'garbage-collect)
 
-;; Neotree fun
-(defun neotree-snipe-dir ()
-  (interactive)
-  (if (projectile-project-root)
-      (neotree-dir (projectile-project-root))
-    (neotree-dir (file-name-directory (file-truename (buffer-name))))
-    )
-  )
-
-(map! :leader :desc "Open neotree here" "o n" #'neotree-snipe-dir
-      :desc "Hide neotree" "o N" #'neotree-hide)
-
 ;; For camelCase
 (global-subword-mode 1)
 
 ;; ripgrep as grep
 (setq grep-command "rg -nS --no-heading "
       grep-use-null-device nil)
-
-;; Mini-frames ;; cool but kinda suboptimal atm
-                                        ;(add-load-path! "~/.emacs.d/mini-frame")
-;; (require 'mini-frame)
-(setq mini-frame-ignore-commands '(evil-ex-search-forward helpful-variable helpful-callable))
-(setq mini-frame-show-parameters
-      '((left . 216)
-        (top . 240)
-        (width . 0.78)
-        (height . 20)
-        (alpha-background . 90))
-      )
-(setq mini-frame-detach-on-hide nil)
-(setq mini-frame-resize t)
-(setq resize-mini-frames t)
-(setq mini-frame-standalone nil)
-;; (mini-frame-mode 1)
 
 ;; Automatically show images but manually control their size
 ;; (setq org-startup-with-inline-images t
@@ -306,16 +282,16 @@
 
 
 ;; (setq
- ;; Edit settings
- ;; org-auto-align-tags nil
- ;; org-tags-column 0
- ;; org-special-ctrl-a/e t
- ;; org-insert-heading-respect-content t
+;; Edit settings
+;; org-auto-align-tags nil
+;; org-tags-column 0
+;; org-special-ctrl-a/e t
+;; org-insert-heading-respect-content t
 
- ;; Org styling, hide markup etc.
- ;; org-hide-emphasis-markers t
- ;; org-pretty-entities t
- ;; org-ellipsis "…")
+;; Org styling, hide markup etc.
+;; org-hide-emphasis-markers t
+;; org-pretty-entities t
+;; org-ellipsis "…")
 
 ;; (setq-default line-spacing 0)
 
@@ -542,23 +518,6 @@
 
 (require 'focus)
 
-(map! :leader
-      :prefix ("F" . "Focus mode")
-      :desc "Toggle focus mode"
-      "t" 'focus-mode
-
-      :desc "Pin focused section"
-      "p" 'focus-pin
-
-      :desc "Unpin focused section"
-      "u" 'focus-unpin)
-
-;; (add-to-list 'focus-mode-to-thing '(org-mode . org-element))
-;; (add-to-list 'focus-mode-to-thing '(python-mode . paragraph))
-;; (add-to-list 'focus-mode-to-thing '(lisp-mode . paragraph))
-
-;;(add-hook 'org-mode-hook #'focus-mode)
-
 (lsp-treemacs-sync-mode 1)
 
 (setq lsp-treemacs-deps-position-params
@@ -574,8 +533,6 @@
 (map! :leader :desc "Open treemacs symbol outliner" "o s" #'lsp-treemacs-symbols
       :desc "Hide neotree" "o S" #'treemacs-quit)
 
-;; (setq +format-on-save-enabled-modes '(not emacs-lisp-mode sql-mode tex-mode latex-mode org-msg-edit-mode nix-mode))
-
 ;; Enable autorevert globally so that buffers update when files change on disk.
 ;; Very useful when used with file syncing (i.e. syncthing)
 (setq global-auto-revert-mode nil)
@@ -588,38 +545,305 @@
 ;;   :custom
 ;;   (lsp-nix-nil-formatter ["nixpkgs-fmt"]))
 
-(use-package! theme-magic
-  :commands theme-magic-from-emacs
-  :config
-  (defadvice! theme-magic--auto-extract-16-doom-colors ()
-    :override #'theme-magic--auto-extract-16-colors
-    (list
-     (face-attribute 'default :background)
-     (doom-color 'error)
-     (doom-color 'success)
-     (doom-color 'type)
-     (doom-color 'keywords)
-     (doom-color 'constants)
-     (doom-color 'functions)
-     (face-attribute 'default :foreground)
-     (face-attribute 'shadow :foreground)
-     (doom-blend 'base8 'error 0.1)
-     (doom-blend 'base8 'success 0.1)
-     (doom-blend 'base8 'type 0.1)
-     (doom-blend 'base8 'keywords 0.1)
-     (doom-blend 'base8 'constants 0.1)
-     (doom-blend 'base8 'functions 0.1)
-     (face-attribute 'default :foreground))))
-
 ;; (use-package consult-omni
 ;; 	:straight (consult-omni :type git :host github :repo "armindarvish/consult-omni" :files (:defaults "sources/*.el"))
 ;;         :after consult)
-(use-package lsp-ui)
+;; (use-package lsp-ui)
 ;; (setq lsp-ui-doc-show-with-cursor t)
 (use-package org-tree-slide
   :custom
   (org-image-actual-width nil))
-;; (add-hook 'comint-output-filter-functions 'comint-osc-process-output)
-;; (setq comint-process-echoes t)
 
 (use-package olivetti)
+
+(use-package! drag-stuff
+  :defer t
+  :init
+  (map! "<M-up>"    #'drag-stuff-up
+        "<M-down>"  #'drag-stuff-down
+        "<M-left>"  #'drag-stuff-left
+        "<M-right>" #'drag-stuff-right))
+
+(setq deft-directory "~/notes/"
+      deft-extensions '("org" "txt" "md" "tex")
+      deft-recursive t)
+
+(setq org-directory "~/notes/")
+
+(require 'org)
+(require 'org-element)
+
+(defcustom org-yt-url-protocol "yt"
+  "Protocol identifier for youtube links."
+  :group 'org-yt
+  :type 'string)
+
+(defun org-yt-follow (video-id)
+  "Open youtube with VIDEO-ID."
+  (browse-url (concat "https://youtu.be/" video-id)))
+
+(org-link-set-parameters org-yt-url-protocol :follow #'org-yt-follow)
+
+(defun org-image-update-overlay (file link &optional data-p refresh)
+  "Create image overlay for FILE associtated with org-element LINK.
+        If DATA-P is non-nil FILE is not a file name but a string with the image data.
+        See also `create-image'.
+        This function is almost a duplicate of a part of `org-display-inline-images'."
+  (when (or data-p (file-exists-p file))
+    (let ((width
+           ;; Apply `org-image-actual-width' specifications.
+           (cond
+            ((not (image-type-available-p 'imagemagick)) nil)
+            ((eq org-image-actual-width t) nil)
+            ((listp org-image-actual-width)
+             (or
+              ;; First try to find a width among
+              ;; attributes associated to the paragraph
+              ;; containing link.
+              (let ((paragraph
+                     (let ((e link))
+                       (while (and (setq e (org-element-property
+                                            :parent e))
+                                   (not (eq (org-element-type e)
+                                            'paragraph))))
+                       e)))
+                (when paragraph
+                  (save-excursion
+                    (goto-char (org-element-property :begin paragraph))
+                    (when
+                        (re-search-forward
+                         "^[ \t]*#\\+attr_.*?: +.*?:width +\\(\\S-+\\)"
+                         (org-element-property
+                          :post-affiliated paragraph)
+                         t)
+                      (string-to-number (match-string 1))))))
+              ;; Otherwise, fall-back to provided number.
+              (car org-image-actual-width)))
+            ((numberp org-image-actual-width)
+             org-image-actual-width)))
+          (old (get-char-property-and-overlay
+                (org-element-property :begin link)
+                'org-image-overlay)))
+      (if (and (car-safe old) refresh)
+          (image-refresh (overlay-get (cdr old) 'display))
+        (let ((image (create-image file
+                                   (and width 'imagemagick)
+                                   data-p
+                                   :width width)))
+          (when image
+            (let* ((link
+                    ;; If inline image is the description
+                    ;; of another link, be sure to
+                    ;; consider the latter as the one to
+                    ;; apply the overlay on.
+                    (let ((parent
+                           (org-element-property :parent link)))
+                      (if (eq (org-element-type parent) 'link)
+                          parent
+                        link)))
+                   (ov (make-overlay
+                        (org-element-property :begin link)
+                        (progn
+                          (goto-char
+                           (org-element-property :end link))
+                          (skip-chars-backward " \t")
+                          (point)))))
+              (overlay-put ov 'display image)
+              (overlay-put ov 'face 'default)
+              (overlay-put ov 'org-image-overlay t)
+              (overlay-put
+               ov 'modification-hooks
+               (list 'org-display-inline-remove-overlay))
+              (push ov org-inline-image-overlays))))))))
+
+(defun org-yt-get-image (url)
+  "Retrieve image from url."
+  (let ((image-buf (url-retrieve-synchronously url)))
+    (when image-buf
+      (with-current-buffer image-buf
+        (goto-char (point-min))
+        (when (looking-at "HTTP/")
+          (delete-region (point-min)
+                         (progn (re-search-forward "\n[\n]+")
+                                (point))))
+        (setq image-data (buffer-substring-no-properties (point-min) (point-max)))))))
+
+(defconst org-yt-video-id-regexp "[-_[:alnum:]]\\{10\\}[AEIMQUYcgkosw048]"
+  "Regexp matching youtube video id's taken from `https://webapps.stackexchange.com/questions/54443/format-for-id-of-youtube-video'.")
+
+(defun org-yt-display-inline-images (&optional include-linked refresh beg end)
+  "Like `org-display-inline-images' but for yt-links."
+  (when (display-graphic-p)
+    (org-with-wide-buffer
+     (goto-char (or beg (point-min)))
+     (let ((re (format "\\[\\[%s:\\(%s\\)\\]\\]" org-yt-url-protocol org-yt-video-id-regexp)))
+       (while (re-search-forward re end t)
+         (let ((video-id (match-string 1))
+               (el (save-excursion (goto-char (match-beginning 1)) (org-element-context)))
+               image-data)
+           (when el
+             (setq image-data
+                   (or (let ((old (get-char-property-and-overlay
+
+                                   'org-image-overlay)))
+                         (and old
+                              (car-safe old)
+                              (overlay-get (cdr old) 'display)))
+                       (org-yt-get-image (format "http://img.youtube.com/vi/%s/0.jpg" video-id))))
+             (when image-data
+               (org-image-update-overlay image-data el t t)))))))))
+
+(advice-add #'org-display-inline-images :after #'org-yt-display-inline-images)
+
+(use-package vertico
+  ;; :ensure t
+  ;; :hook
+  ;; :custom
+  ;; (vertico-count 10)                    ;; Number of candidates to display in the completion list.
+  ;; (vertico-resize nil)                  ;; Disable resizing of the vertico minibuffer.
+  ;; (vertico-cycle nil)                   ;; Do not cycle through candidates when reaching the end of the list.
+  :config
+  ;; Customize the display of the current candidate in the completion list.
+  ;; This will prefix the current candidate with “» ” to make it stand out.
+  ;; Reference: https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
+  (advice-add #'vertico--format-candidate :around
+              (lambda (orig cand prefix suffix index _start)
+                (setq cand (funcall orig cand prefix suffix index _start))
+                (concat
+                 (if (= vertico--index index)
+                     (propertize "» " 'face '(:foreground "#80adf0" :weight bold))
+                   "  ")
+                 cand))))
+
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+(add-to-list 'treesit-language-source-alist
+             '(hyprlang "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang"))
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(use-package hyprlang-ts-mode :defer t)
+
+;; (setq +lsp-company-backends '(:separate company-yasnippet company-capf))
+
+;; (with-eval-after-load 'lsp-mode
+;;   (setq lsp-completion-provider :capf))
+
+;; (use-package! orderless
+;;   :config
+;;   (setq completion-styles '(orderless basic)
+;;         completion-category-defaults nil
+;;         completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; (use-package! kind-icon
+;;   :after corfu
+;;   :config
+;;   (setq kind-icon-default-face 'corfu-default)
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; (with-eval-after-load 'lsp-mode
+;;   (setq lsp-completion-provider :capf))
+
+;; (use-package! orderless
+;;   :config
+;;   (setq completion-styles '(orderless basic)
+;;         completion-category-defaults nil
+;;         completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; (use-package! corfu
+;;   :config
+;;   ;; Prioritize snippets before LSP completions
+;;   (setq corfu-sort-function
+;;         (lambda (&rest candidates)
+;;           (let ((snippets (seq-filter (lambda (candidate)
+;;                                         (string-match-p "snippet"
+;;                                                         (get-text-property 0 'annotation candidate)))
+;;                                       candidates))
+;;                 (non-snippets (seq-remove (lambda (candidate)
+;;                                             (string-match-p "snippet"
+;;                                                             (get-text-property 0 'annotation candidate)))
+;;                                           candidates)))
+;;             (append snippets non-snippets)))))
+
+;; (use-package! kind-icon
+;;   :after corfu
+;;   :config
+;;   (defface my-kind-icon-face
+;;     '((t (:family "Hack Nerd Font" ;; Replace with your preferred font
+;;           :height 90 ;; Adjust size as needed
+;;           :inherit corfu-default)))
+;;     "Custom face for kind icons")
+;;   (setq kind-icon-default-face 'my-kind-icon-face)
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; :n "K" #'lsp-ui-doc-show
+;; (define-key lsp-mode-map (kbd "K") 'lsp-ui-doc-show)
+;; (setq lsp-enable-on-type-formatting nil)
+;; (setq lsp-enable-auto-formatting nil)
+
+(defun lsp-booster--advice-json-parse (old-fn &rest args)
+  "Try to parse bytecode instead of json."
+  (or
+   (when (equal (following-char) ?#)
+     (let ((bytecode (read (current-buffer))))
+       (when (byte-code-function-p bytecode)
+         (funcall bytecode))))
+   (apply old-fn args)))
+(advice-add (if (progn (require 'json)
+                       (fboundp 'json-parse-buffer))
+                'json-parse-buffer
+              'json-read)
+            :around
+            #'lsp-booster--advice-json-parse)
+
+(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+  "Prepend emacs-lsp-booster command to lsp CMD."
+  (let ((orig-result (funcall old-fn cmd test?)))
+    (if (and (not test?)                             ;; for check lsp-server-present?
+             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+             lsp-use-plists
+             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (executable-find "emacs-lsp-booster"))
+        (progn
+          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
+            (setcar orig-result command-from-exec-path))
+          (message "Using emacs-lsp-booster for %s!" orig-result)
+          (cons "emacs-lsp-booster" orig-result))
+      orig-result)))
+(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+
+;; (use-package hyprlang-ts-mode
+;;   :straight (:type git :host github :repo "Nathan-Melaku/hyprlang-ts-mode"))
+
+;; Use a custom browser command
+(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-generic-program "/usr/bin/zen-browser")

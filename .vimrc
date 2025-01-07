@@ -97,10 +97,12 @@ set paste
 
 call plug#begin()
 Plug 'jasonccox/vim-wayland-clipboard'
-call plug#end()
-
+Plug 'prabirshrestha/vim-lsp'
+call plug#end()                 
+                                
 set wildmenu
 set path+=**
+set ignorecase
 syntax on
 set background=dark
 colorscheme retrobox

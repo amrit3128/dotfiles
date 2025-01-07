@@ -27,12 +27,3 @@ button {
 element-text {
     font:	"Fira Code SemiBold 13";
 }
-
-
-//@theme "/usr/share/rofi/themes/gruvbox-dark-soft.rasi"
-
-//@theme "/usr/share/rofi/themes/gruvbox-dark-soft.rasi"
-
-//@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
-
-@theme "/usr/share/rofi/themes/android_notification.rasi"
