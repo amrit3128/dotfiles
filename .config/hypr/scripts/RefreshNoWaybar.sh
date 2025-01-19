@@ -28,12 +28,5 @@ ags -q
 
 # Wallust refresh
 ${SCRIPTSDIR}/WallustSwww.sh &
-
-# Relaunching rainbow borders if the script exists
 sleep 1
-if file_exists "${UserScripts}/RainbowBorders.sh"; then
-    ${UserScripts}/RainbowBorders.sh &
-fi
-
-
 exit 0
